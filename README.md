@@ -1,46 +1,102 @@
-# Getting Started with Create React App
+https://onehour.co.kr/authorization/register    //배포페이지
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+https://xd.adobe.com/view/62f96172-1df8-495c-a43a-e7bea478280e-37aa/screen/b82a58c7-10a6-467b-b95e-e766bc45bf32/
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+가입
+vkdnj4158@naver.com
+123456
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+//선생님
+Teacher123@naver.com
+123456
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+//관리자
+admin@naver.com
+12345
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ 
+//errror 회원가입 선생님 데이터 넘기는거 안됨
+module - Button1 (size:string,text:string를 필요로함)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+//1이학생 2가선생, 관리자0
+// 0 = 관리자
+// 1 = 학생
+// 2 = 선생
 
-### `yarn eject`
+1. 로그아웃 - 인증 학생, 선생, 관리자
+2. DashBoard css
+3. 헤더부분 링크연결
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+//admin
+//DashBoard Page
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. 검색과 카테고리 분류가능
+2. 더보기버튼 클릭
+3. 하단에 슬라이더입히기
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+// 12-18 
+// hoc연결
+// 로그아웃
 
-## Learn More
+// https://thereclub.tistory.com/59   Cookie
+//https://medium.com/anna-coding/use-asynchronous-function-in-react-hooks-useeffect-with-typescript-c41ccb78e485 // useEffect async await
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+// 주말 코드 간결화
+//  form(formik쓰는게 간편할듯), login 반응형 plus 모듈화
+//  helmet , hooks이용 title 수정
+// 쿠키 function export 받게 모듈화
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+// 토큰과 authority를 cookie에서 받아야하는데
+cookie에는 string[]으로 넣어야함
+
+
+
+
+flux패턴 - 내가아는 거
+
+redux-thunk -js generation, saga - (편함)
+
+ducks패턴
+
+
+Preview : Response body , 서버에서 준 데이터 확인할 수 있다.
+Redux는 새로고침하면 날라간다
+
+
+auth단 거의 완성
+
+
+
+**
+route에 app.tsx
+/student/depth/dashboard이런식일때와
+/dashboard이런식일때 public인식하는것이 다르다
+
+
+// 인증 하는 거 해야함
+// 로그인 유효성
+// 유저 마이페이지 회원탈퇴
+// react - 캘린더 - 유저
+
+
+//비동기처리
+1 Promise then(성공) catch(error)
+
+2//async await
+
+const request = async response;
+
+
+
+3 x timeout
+
+const response = await request
+

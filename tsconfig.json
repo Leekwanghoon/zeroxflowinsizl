@@ -22,5 +22,8 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false
 }
