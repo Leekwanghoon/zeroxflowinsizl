@@ -21,7 +21,11 @@ import TestAll from './Test/TestAll';
 import AdminMyPage from './Main/MyPage/AdminMyPage';
 import AdminCourseMoreViewPage from './admin/AdminCourseMoreViewPage';
 import AdminMode from './admin/AdminMode';
-
+import AdminMemberManage from './admin/AdminMemberManage/AdminMemberManage';
+import AdminOrganizationManage from './admin/AdminOrganizationManage/AdminOrganizationManage';
+import AdminBannerManage from './admin/AdminBanner/AdminBannerManage';
+import AdminCategoryManage from './admin/AdminCategory/AdminCategoryManage';
+import AdminPlayListManage from './admin/AdminPlayListManage/AdminPlayListManage';
 
 const App: React.FC = () => {
     return (
@@ -29,7 +33,7 @@ const App: React.FC = () => {
             <ThemeProvider theme={theme}>
                 <GlobalStyle/>
                 <Router>
-                <Suspense fallback={(<div >Loading...</div>)}>
+                <Suspense fallback={(<div>Loading...</div>)}>
                     <Switch>
                         <Route path="/" exact component={LandingPage}/>
                         <Route path="/login" exact component={Auth(Login,4)}/>
@@ -52,7 +56,14 @@ const App: React.FC = () => {
                         <Route path="/admin/AdminCourseMoreViewPage" exact component={Auth(AdminCourseMoreViewPage, 0, true)} />
                         <Route path="/admin/AdminMyPage" exact component={Auth(AdminMyPage, 0, true)} />
                         <Route path="/admin/AdminMode" exact component={Auth(AdminMode, 0, true)} />
-
+                        <Route path="/admin/AdminMode/Member/member_manage" exact component={Auth(AdminMemberManage, 0, true)} />
+                        <Route path="/admin/AdminMode/Banner/banner_manage" exact component={Auth(AdminBannerManage, 0, true)} />
+                        <Route path="/admin/AdminMode/Organization/organization_manage" exact component={Auth(AdminOrganizationManage, 0, true)} />
+                        <Route path="/admin/AdminMode/Category/category_manage" exact component={Auth(AdminCategoryManage, 0, true)} />
+                        
+                        <Route path="/admin/AdminMode/PlayList/play_list_manage" exact component={Auth(AdminPlayListManage, 0, true)} />
+                        
+                        
                         <Route path="/TestAll" exact component={TestAll} />
                         {/* <Redirect path="*" to="/"/> */}
                     </Switch>

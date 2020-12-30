@@ -5,7 +5,7 @@ import AdminNaviLeft from './AdminNaviLeft';
 
 const Wrapper = styled.div`
     display:flex;
-    min-height:100vh;
+    min-height:2350px;
 `;
 
 const Navigation = styled.div`
@@ -18,7 +18,6 @@ const Navigation = styled.div`
 
 
 const Content = styled.div`
-    background-color: gray;
     width:85%;
 `;
 
@@ -31,7 +30,7 @@ const AdminMode:React.FC = () => {
             </Navigation>
             <Content>
                 Content영역    
-            </Content>    
+            </Content>
         </Wrapper>
     );
 }

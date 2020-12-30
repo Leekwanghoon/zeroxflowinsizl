@@ -1,0 +1,42 @@
+$background: #233D4D;
+$border-before: #D3D3BE;
+$border-before-clicked: hsl(24, 2%, 42%);
+
+.chkbx input[type="checkbox"] {
+  display: none;
+}
+
+.chkbx {
+  position: relative;
+  cursor: pointer;
+  .x {
+    display: block;
+    width: 60px;
+    height: 25px;
+    border: 2px solid $border-before;
+    border-radius: 60px;
+    transition: 1s;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 2px;
+      left: 0px;
+      box-sizing: border-box;      
+      background: $border-before;
+      border: 2px solid $border-before;
+      border-radius: 40px;
+      transition: 1s;
+    }
+  }
+  :checked ~ .x:before {
+    background: $border-before-clicked;
+    border-color: $border-before-clicked;
+    transform: translatex(38px);
+  }
+  :checked ~ .x {
+    border-color: $border-before-clicked;
+  }
+}
+

@@ -205,6 +205,27 @@ export const MyInfo = ( token:any, email:any ) => {
 }
 
 
+//admin User management 회원 관리 - 리스트 불러오기
+
+// export const MyInfo = ( token:any, email:any ) => {    
+//     const request = axios.get(`https://1hour.school/api/v1/members/load/${email}`,{
+//             headers: {
+//                 Authorization: token
+//             }
+//         }).then(response => {
+//             if(response.data.status === 200) {
+//                 return response.data;
+//             } else {
+//                 console.log(response.data,"머가오냐");
+//             }
+//         });
+//     return {
+//         type: MYINFO_DATA,
+//         payload: request
+//     }
+// }
+
+
 
 
 

@@ -8,9 +8,6 @@ interface Props extends FrequnetlyButton {
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-
-
-
 // background-color: ${props => props.theme.color.yellowButton};
 const Container = styled.button`
     width:${(props:FrequnetlyButton) => props.size};

@@ -1,18 +1,13 @@
 import React from 'react';
-import axios from 'axios';
+import PublicButton from '../utils/Button/PublicButton';
 
-const TestAll = (props:any) => {
-   
-    // async function getUser() {
-    //     try {
-    //         const response await axios.get()
-    //     }
-    // }
-    
-    return(
-        <div>
-        </div>
-    );
+
+const TestAll:React.FC = () => {
+  return(
+    <>
+      <PublicButton />
+    </>
+  );
 }
 
 export default TestAll;
