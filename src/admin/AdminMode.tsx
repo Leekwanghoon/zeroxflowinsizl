@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import AdminNaviLeft from './AdminNaviLeft';
+import AdminNaviLeft from './AdminPlayListManage/AdminNaviLeft';
 
 
 const Wrapper = styled.div`

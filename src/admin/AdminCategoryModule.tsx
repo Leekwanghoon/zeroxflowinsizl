@@ -25,8 +25,6 @@ const Text = styled.option`
     font-size:1em;
 `;
 
-
-
 const AdminCategoryModule = (props:any) => {
 
     const dispatch = useDispatch();

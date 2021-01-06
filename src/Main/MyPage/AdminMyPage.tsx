@@ -171,7 +171,7 @@ const AdminMyPage = (props:any) => {
                         </WrapDIV>
                         <WrapDIV>
                             <Ptext>비밀번호</Ptext>
-                            <Input type="password" {...password} />
+            \                <Input type="password" {...password} />
                         </WrapDIV>
                         <WrapBut>
                             <Button1 onClick={onClickUpdate} text="수정하기" size="10%" heightSize="62%" color="rgb(0, 116, 201)" />

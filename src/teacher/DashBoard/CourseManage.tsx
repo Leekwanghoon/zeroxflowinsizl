@@ -6,7 +6,6 @@ import { RootState } from '../../_reducers';
 import { deadlineInfo } from '../../_actions/user_action';
 import  Button1  from '../../utils/Button1';
 import { Gear } from '../../utils/Icons';
-import axios from 'axios';
 
 const Container = styled.section`
     min-height: 75vh;

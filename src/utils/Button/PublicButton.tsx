@@ -43,8 +43,6 @@ type PublicButtonProps = {
 
 const PublicButton = ({state=false,PublicButtonChange}: PublicButtonProps) => {
 
-    
-
     return(
         <>
             <CheckBox state={state} onClick={PublicButtonChange}>

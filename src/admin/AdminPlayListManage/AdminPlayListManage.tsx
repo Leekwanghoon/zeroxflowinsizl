@@ -1,10 +1,9 @@
 import React,{ useState } from 'react';
 import styled from 'styled-components';
-import AdminNaviLeft from '../AdminNaviLeft';
+import AdminNaviLeft from './AdminNaviLeft';
 import Helmet from 'react-helmet';
 import AdminPlayListMainManage from './AdminPlayListMainManage';
 import HeaderAdminPlayList from './HeaderAdminPlayList';
-
 
 const Container = styled.div`
     display:flex;
@@ -33,8 +32,19 @@ const Content = styled.div`
 const AdminPlayListManage:React.FC = (props:any) => {
 
     const CookieValue = props.cookieValue[1];
-
+    const [IsClickContent, setIsClickContent] = useState<boolean>(true);
+    const [PlayListItems, setPlayListItems] = useState<object>([]);
     
+
+    const ContentButton = () => {
+        console.log("목록을 눌렀다");
+        setIsClickContent(true);
+    }
+
+    const OnClickPlayListButton = (items:object) => {
+        setIsClickContent(false);
+        setPlayListItems(items);
+    }
 
     return(
         <Container>
@@ -46,8 +56,8 @@ const AdminPlayListManage:React.FC = (props:any) => {
             </Navigation>
             <Wrapper>     
                 <Content>
-                    <HeaderAdminPlayList />
-                    <AdminPlayListMainManage CookieValue={CookieValue} />
+                    <HeaderAdminPlayList OnClickPlayListButton={OnClickPlayListButton} ContentButton={ContentButton} CookieValue={CookieValue} />
+                    <AdminPlayListMainManage PlayListItems={PlayListItems} IsClickContent={IsClickContent} CookieValue={CookieValue} />
                 </Content>
             </Wrapper>    
         </Container>

@@ -5,6 +5,8 @@ import axios from 'axios';
 import Button1 from '../../utils/Button1';
 import AdminPlayListCreateModal from './AdminPlayListCreateModal';
 import PublicButton from '../../utils/Button/PublicButton';
+import AdminPlayListUpdateModal from './AdminPlayListUpdateModal';
+import AdminClickPlayList from './AdminClickPlayList';
 
 const SearchSection = styled.div`
     margin-Top: 10px;
@@ -37,17 +39,21 @@ const Tbody = styled.tbody`
     font: 13px / 15px "Helvetica Neue";
 `;
 
+
+
 type Props = {
     CookieValue: Number;
+    IsClickContent: boolean;
+    PlayListItems: any;
 }
 
-
-
-const AdminPlayListMainManage:React.FC<Props> = ({CookieValue}) => {
+const AdminPlayListMainManage:React.FC<Props> = ({PlayListItems,IsClickContent,CookieValue}) => {
 
     const [PlayListData, setPlayListData] = useState<Object[]>([]);
     const [page, setPage] = useState<number>(1);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
+    const [specificPlayList, setSpecificplaylist] = useState<Object[]>([]);
 
     async function getPlayList() {
         await axios.get(`https://1hour.school/api/v1/playlist/load/${page}`, {
@@ -60,11 +66,11 @@ const AdminPlayListMainManage:React.FC<Props> = ({CookieValue}) => {
                 setPlayListData(response.data.data.rows)
             }
         });
-    }
+    } 
 
     useEffect(() => {
         getPlayList();
-    },[isModalOpen])
+    },[isModalOpen,isModalUpdateOpen,IsClickContent])
 
     const onPlayListCreate = () => {
         setIsModalOpen(true);
@@ -92,8 +98,26 @@ const AdminPlayListMainManage:React.FC<Props> = ({CookieValue}) => {
         });
     }
 
+
+    const PlayListUpdateModalHandler = (playlist:any) => {
+        setIsModalUpdateOpen(true);
+        setSpecificplaylist(playlist);
+    }
+
+    //플레이리스트
+    if(IsClickContent === false) {
+        return(
+            <AdminClickPlayList CookieValue={CookieValue} PlayListItems={PlayListItems} />
+        );
+    }
+
     return(
         <>
+        {isModalUpdateOpen ? 
+                <>
+                    <AdminPlayListUpdateModal data={PlayListData} playlist={specificPlayList} CookieValue={CookieValue} setIsModalUpdateOpen={setIsModalUpdateOpen} />
+                </> : null
+            }
             {isModalOpen ? 
                 <>
                     <AdminPlayListCreateModal setIsModalOpen={setIsModalOpen} CookieValue={CookieValue} />
@@ -101,7 +125,7 @@ const AdminPlayListMainManage:React.FC<Props> = ({CookieValue}) => {
             }
             <SearchSection>
                 <InputAlign>
-                    <Button1 size="130pt" heightSize="20pt" onClick={onPlayListCreate} text="플레이리스트 생성하기"  />
+                    <Button1 size="130pt" heightSize="20pt" onClick={() => onPlayListCreate()} text="플레이리스트 생성하기"  />
                 </InputAlign>
             </SearchSection>
             <div>
@@ -121,12 +145,13 @@ const AdminPlayListMainManage:React.FC<Props> = ({CookieValue}) => {
                                     <tr key={index}>
                                         <td>{playlist.playlist_name}</td>
                                         <td>{playlist.index}</td>
-                                        <td><PublicButton 
+                                        <td>
+                                            <PublicButton 
                                                 state={playlist.hidden}
                                                 PublicButtonChange={() => PublicButtonChange(playlist)}
                                             />
                                         </td>
-                                        <td style={{cursor:'pointer'}}><img src={pencil} alt="logo" width="11px" height="11px" /></td>
+                                        <td onClick={() => PlayListUpdateModalHandler(playlist)} style={{cursor:'pointer'}}><img src={pencil} alt="logo" width="11px" height="11px" /></td>
                                     </tr>
                                 );
                             })

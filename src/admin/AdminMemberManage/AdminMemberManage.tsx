@@ -1,6 +1,6 @@
 import React,{ useState } from 'react';
 import styled from 'styled-components';
-import AdminNaviLeft from '../AdminNaviLeft';
+import AdminNaviLeft from '../AdminPlayListManage/AdminNaviLeft';
 import Helmet from 'react-helmet';
 import HeaderAdmin from './HeaderAdmin';
 import AdminMemberMainManage from './AdminMemberMainManage';

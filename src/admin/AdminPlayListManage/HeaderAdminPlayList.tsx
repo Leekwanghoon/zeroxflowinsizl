@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import { getPlayList } from '../../utils/Function/AsyncFunction';
 const Wrapper = styled.section`
     height: 10%;
 `;
@@ -41,9 +41,29 @@ const HeadCategorySpan = styled.span`
     }
 `;
 
+type HeaderProps = {
+    CookieValue:number;
+    ContentButton: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
+    OnClickPlayListButton: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
+}
 
 
-const HeaderAdminPlayList:React.FC = () => {
+const HeaderAdminPlayList = ({CookieValue,ContentButton,OnClickPlayListButton}:HeaderProps) => {
+
+    const [Data,setData] = useState<[]>([]);
+    
+    useEffect(() => {
+        getPlayList(1,CookieValue).then(function(data) {
+            if(data.status === 200) {
+                setData(data.data.rows);
+            }
+        }).catch(function(err) {
+            alert("데이터 불러오는데 실패했습니다");
+            console.log(err);
+        })
+    },[])
+
+    
 
     return(
         <Wrapper>
@@ -53,30 +73,16 @@ const HeaderAdminPlayList:React.FC = () => {
                 </HeadFont>
             </HeadTitle>
             <HeadCategory>
-                <HeadCategorySpan>
+                <HeadCategorySpan onClick={ContentButton}>
                     목록
                 </HeadCategorySpan>
-                <HeadCategorySpan>
-                    플레이리스트1
-                </HeadCategorySpan>
-                <HeadCategorySpan>
-                    플레이리스트2
-                </HeadCategorySpan>
-                <HeadCategorySpan>
-                    플레이리스트3
-                </HeadCategorySpan>
-                <HeadCategorySpan>
-                    플레이리스트4
-                </HeadCategorySpan>
-                <HeadCategorySpan>
-                    플레이리스트5
-                </HeadCategorySpan>
-                <HeadCategorySpan>
-                    LEVEL1 저학년 회화
-                </HeadCategorySpan>
-                <HeadCategorySpan>
-                    만화로 배우는 영회
-                </HeadCategorySpan>
+                {Data.map((items:any,index) => {
+                    return(
+                        <HeadCategorySpan onClick={() => OnClickPlayListButton(items)} key={index}>
+                            {items.playlist_name}
+                        </HeadCategorySpan>
+                    );
+                })}
             </HeadCategory>
         </Wrapper>
     );

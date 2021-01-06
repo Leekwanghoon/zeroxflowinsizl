@@ -2,9 +2,8 @@ import React,{ useState } from 'react';
 import styled from 'styled-components';
 import AdminNaviLeft from '../AdminPlayListManage/AdminNaviLeft';
 import Helmet from 'react-helmet';
-import HeaderAdminOrganization from './HeaderAdminOrganization';
-import AdminOrganizationMainManage from './AdminOrganizationMainManage';
-
+import HeaderAdminHomeworkManage from '../AdminHomeworkManage/HeaderAdminHomeworkManage';
+import AdminHomeworkManageMain from '../AdminHomeworkManage/AdminHomeworkManageMain';
 
 const Container = styled.div`
     display:flex;
@@ -30,42 +29,42 @@ const Content = styled.div`
 `;
 
 
-const AdminOrganizationManage:React.FC = (props:any) => {
+const AdminHomeworkManage:React.FC = (props:any) => {
 
     const CookieValue = props.cookieValue[1];
-    const [state, setState] = useState<Number>(-1);
+    
+    //true 마감 false 진행중
+    const [state, setState] = useState<boolean>(false);
 
-    const onTotalStatus = () => {
-        setState(-1);
+
+    const onProgress = () => {
+        setState(false);
     }
-    const onSchoolStatus = () => {
-        setState(0);
+    const onDeadline = () => {
+        setState(true);
     }
-    const onUserStatus = () => {
-        setState(1);
-    }
+    
 
     return(
         <Container>
             <Helmet>
-                <title>Admin | 회원관리</title>
+                <title>Admin | 과제마감 관리</title>
             </Helmet>
             <Navigation>
                 <AdminNaviLeft />
             </Navigation>
             <Wrapper>     
                 <Content>
-                    <HeaderAdminOrganization 
-                        state={state} 
-                        onTotalStatus={onTotalStatus}
-                        onSchoolStatus={onSchoolStatus}
-                        onUserStatus={onUserStatus}
+                    <HeaderAdminHomeworkManage 
+                        state={state}
+                        onProgress={onProgress}
+                        onDeadline={onDeadline}
                     />
-                    <AdminOrganizationMainManage type={state} CookieValue={CookieValue} />
+                    <AdminHomeworkManageMain state={state} CookieValue={CookieValue} />
                 </Content>
             </Wrapper>    
         </Container>
     );
 }
 
-export default AdminOrganizationManage;
+export default AdminHomeworkManage;

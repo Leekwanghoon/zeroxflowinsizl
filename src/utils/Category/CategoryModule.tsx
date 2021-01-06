@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import axios from 'axios';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../_reducers';

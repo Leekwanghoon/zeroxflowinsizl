@@ -17,7 +17,7 @@ import StudentCourseMoreViewPage from './student/StudentCourseMoreViewPage';
 import StudentMyPage from './student/StudentMyPage';
 import MyReport from './student/MyReport';
 import AdminMainPage from './admin/AdminMainPage';
-import TestAll from './Test/TestAll';
+import TestAll from './AdminNaviContentManage/AdminNaviContentContainer';
 import AdminMyPage from './Main/MyPage/AdminMyPage';
 import AdminCourseMoreViewPage from './admin/AdminCourseMoreViewPage';
 import AdminMode from './admin/AdminMode';
@@ -26,6 +26,10 @@ import AdminOrganizationManage from './admin/AdminOrganizationManage/AdminOrgani
 import AdminBannerManage from './admin/AdminBanner/AdminBannerManage';
 import AdminCategoryManage from './admin/AdminCategory/AdminCategoryManage';
 import AdminPlayListManage from './admin/AdminPlayListManage/AdminPlayListManage';
+import AdminContentManage from './admin/AdminContentManage/AdminContentManage';
+import AdminHomeworkManage from './admin/AdminHomeworkManage/AdminHomeworkManage';
+import AdminContentMakeManage from './admin/AdminContentMake/AdminContentMakeManage';
+import YoutubeApi from './YoutubeApi/YoutubeApi';
 
 const App: React.FC = () => {
     return (
@@ -63,8 +67,14 @@ const App: React.FC = () => {
                         
                         <Route path="/admin/AdminMode/PlayList/play_list_manage" exact component={Auth(AdminPlayListManage, 0, true)} />
                         
+                        <Route path="/admin/AdminMode/Edit/content_manage" exact component={Auth(AdminContentManage, 0, true)} />
+                        <Route path="/admin/AdminMode/Edit/homework_manage" exact component={Auth(AdminHomeworkManage, 0, true)} />
                         
-                        <Route path="/TestAll" exact component={TestAll} />
+                        
+                        <Route path="/admin/Edit/mediatool_manage" exact component={Auth(AdminContentMakeManage, 0, true)} />
+
+                        
+                        <Route path="/TestAll" exact component={YoutubeApi} />
                         {/* <Redirect path="*" to="/"/> */}
                     </Switch>
                 </Suspense>

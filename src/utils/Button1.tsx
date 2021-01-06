@@ -17,7 +17,7 @@ const Container = styled.button`
     background-color: ${props => props.color};
     font-size: 12px;
     font-weight:bold;
-    color:white;
+    color:black;
     outline: none;
     cursor: pointer;
     &:hover {
