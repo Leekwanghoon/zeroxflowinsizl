@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AdminNaviLeft from '../AdminPlayListManage/AdminNaviLeft';
 import Helmet from 'react-helmet';
@@ -64,6 +64,8 @@ const AdminContentManage:React.FC = (props:any) => {
     const onSingAlong = () => {
         setState(5);
     }
+
+
 
     return(
         <Container>

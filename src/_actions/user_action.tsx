@@ -7,7 +7,8 @@ import {
     SEARCHBYCATEGORY_DATA,
     DEADLINEINFO_DATA,
     MYINFO_DATA,
-    DASHBOARD_DATA
+    DASHBOARD_DATA,
+    MEDIATOOL_DATA
 } from './types';
 // DASHBOARD_DATA
 // AUTH_USER,
@@ -204,6 +205,27 @@ export const MyInfo = ( token:any, email:any ) => {
     }
 }
 
+
+
+//admin 영상마법사
+
+export const MediaToolData = (token:any, body:any) => {
+    const request = axios.post(`https://1hour.school/api/v1/contents/create/frame`, body, {
+        headers: {
+            Authorization: token
+        }
+    }).then(response => {
+        if(response.data.status === 200) {
+            return response.data;
+        } else {
+            console.log(response.data,"머가오냐");
+        }
+    });
+    return {
+        type: MEDIATOOL_DATA,
+        payload: request
+    }
+}
 
 
 

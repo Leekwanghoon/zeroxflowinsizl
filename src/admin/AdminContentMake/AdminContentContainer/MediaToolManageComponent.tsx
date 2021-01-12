@@ -6,7 +6,7 @@ import CategoryModule from '../Utils/CategoryModule';
 import InputModule from '../Utils/InputModule';
 import TextAreaModule from '../Utils/TextAreaModule';
 import Youtube from 'react-youtube';
-import axios from 'axios';
+import { getRegisterMediaTool } from '../../../utils/Function/AsyncFunction';
 const Container = styled.div`
     margin-top: 50pt;
 `;
@@ -62,21 +62,25 @@ const ButtonDIV = styled.div`
 
 type Props = {
     CookieValue: Number;
+    setState: any;
+    setContents:any;
+    setParagraphs:any;
 }
 
 
 
 
-const MedialToolManageComponent = ({CookieValue}:Props) => {
+const MedialToolManageComponent = ({setContents,
+    setParagraphs, setState,CookieValue}:Props) => {
+    
 
-
+    
     const [youtubeURL,setYoutubeUrl] = useState<string>("");
     const [YoutubeTitle,setYoutubeTitle] = useState<any>("");
     const [CourseTitle,setCourseTitle] = useState<string>("");
     const [Captions,setCaptions] = useState<string>("");
 
 
-    const [pkList, setPkList] = useState<Number[]>([]);
 
     const [totalTime, setTotalTime] = useState<number | undefined>(0);
 
@@ -86,7 +90,8 @@ const MedialToolManageComponent = ({CookieValue}:Props) => {
     const [EmptyArray, setEmptyArray] = useState<number[]>([]);
     console.log(EmptyArray);
 
-   const onNextButtonClick = () => {
+    
+    const onNextButtonClick = () => {
        let body = {
             youtube: youtubeURL,    //String url
             youtubeTitle: YoutubeTitle, //유튜브영상제목 String
@@ -95,12 +100,22 @@ const MedialToolManageComponent = ({CookieValue}:Props) => {
             title:CourseTitle,//영상제목(String)
             captions: Captions // 컨텐츠 가사 및 자막(String)
        }
-       axios.post(`https://1hour.school/api/v1/contents/create/frame`, body, {
-        headers: {
-            Authorization: CookieValue
-        }
-       }).then(response => {console.log(response.data)});
+    getRegisterMediaTool(CookieValue,body)
+            .then(function(data) {
+                if(data.status === 200) {
+                    console.log(data.data,"데이터확인");
+                    setContents(data.data.contents);
+                    setParagraphs(data.data.paragraphs);
+                } else {
+                    console.log("영상마법사를 만드는데 실패")
+                }
+            }).catch(function(err) {
+                alert("데이터를 불러오는데 실패했당");
+                console.log(err);
+            })
+    setState(2);
    }
+
 
    const youtubeUrlChangeHandler = (e:any) => {
        setYoutubeUrl(e.target.value);
@@ -127,27 +142,29 @@ const MedialToolManageComponent = ({CookieValue}:Props) => {
     }
 
     //삭제하는거 해결해야함
-    const onClickCheckButton = (pk:number,index:any) => {
+    const onClickCheckButton = (pk:any,index:any) => {
         if(EmptyArray.includes(pk)) {
             
-            // console.log(pk,"는 포함되 있다 제거해라",index,"index값");
-            // const result = EmptyArray.filter((emptyArray:any) => {
-            //     if(emptyArray.includes(pk)) {
-            //         console.log(pk,"pk");
-            //     }
-            // });
-            // console.log(result,"result");
+            //pk = 1,2,3,4,5 index = 0,1,2,3,4
+            // console.log(EmptyArray.findIndex(pk));
+            console.log(pk,"pk");
+            console.log(EmptyArray,"저");
+            console.log(EmptyArray,"후");
         } else {
             const array1 = EmptyArray.concat(pk);
             array1.sort(function(a,b) {
                 return a-b;
             })
+            console.log(pk,"pkpk");
+            console.log(index,"index");
+            // const array1 = EmptyArray.splice(index,0,pk);
             setEmptyArray(array1);
         }
+        
+        //State2.로 변화해줘야하고
+        // 유효성처리도 해줘야한다.
     }
    
-    
-
    const opts:any = {
         width: "480",
         height: "320",

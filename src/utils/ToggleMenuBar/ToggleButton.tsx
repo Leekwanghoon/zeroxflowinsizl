@@ -23,7 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function ToggleButton() {
+type Props = {
+  handleClickDelete:any;
+}
+
+export default function ToggleButton({handleClickDelete}:Props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -57,6 +61,8 @@ export default function ToggleButton() {
     prevOpen.current = open;
   }, [open]);
 
+  
+
   return (
     <div className={classes.root}>
       <div>
@@ -78,7 +84,7 @@ export default function ToggleButton() {
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>영상 수정하기</MenuItem>
-                    <MenuItem onClick={handleClose}>영상 삭제하기</MenuItem>
+                    <MenuItem onClick={handleClickDelete}>영상 삭제하기</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

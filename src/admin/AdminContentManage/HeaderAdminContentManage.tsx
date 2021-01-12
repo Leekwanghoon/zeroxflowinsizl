@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
@@ -25,7 +25,7 @@ const HeadCategory = styled.div`
     border-bottom: 1px solid black;
 `;
 
-const HeadCategorySpan = styled.span`
+const HeadCategorySpan = styled.p`
     width: 10%;
     display: inline-flex;
     font-size: 18px;

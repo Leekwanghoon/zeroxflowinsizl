@@ -15,3 +15,7 @@ export const DEADLINEINFO_DATA = "deadlineinfo_data" as const;
 
 //MyInfo
 export const MYINFO_DATA = "myinfo_data" as const;
+
+//영상마법사
+export const MEDIATOOL_DATA = "mediatool_data" as const;
+

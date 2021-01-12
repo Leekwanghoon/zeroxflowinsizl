@@ -5,6 +5,7 @@ import { FrequnetlyButton } from '../types';
 interface Props extends FrequnetlyButton {
     text: string,
     heightSize?: string,
+    margin?:any,
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -17,6 +18,7 @@ const Container = styled.button`
     background-color: ${props => props.color};
     font-size: 12px;
     font-weight:bold;
+    margin:${(props:FrequnetlyButton) => props.margin};
     color:black;
     outline: none;
     cursor: pointer;
@@ -28,7 +30,8 @@ const Container = styled.button`
 const Button1: React.FunctionComponent<Props> = ({
     onClick,
     text,
-    size, 
+    size,
+    margin="0px",
     heightSize="20px",
     color="#ffe94a"}) => 
         {
@@ -38,6 +41,7 @@ const Button1: React.FunctionComponent<Props> = ({
                 size={size} 
                 heightSize={heightSize} 
                 color={color}
+                margin={margin}
             >
                     {text}
             </Container>

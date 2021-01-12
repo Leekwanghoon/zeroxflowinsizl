@@ -30,6 +30,9 @@ import AdminContentManage from './admin/AdminContentManage/AdminContentManage';
 import AdminHomeworkManage from './admin/AdminHomeworkManage/AdminHomeworkManage';
 import AdminContentMakeManage from './admin/AdminContentMake/AdminContentMakeManage';
 import YoutubeApi from './YoutubeApi/YoutubeApi';
+import Loading from './utils/Loading';
+import ArrayControl from './utils/ArrayControl';
+import TimeControl from './YoutubeApi/TimeControl';
 
 const App: React.FC = () => {
     return (
@@ -49,7 +52,6 @@ const App: React.FC = () => {
                         <Route path="/CourseMoreViewPage" exact component={Auth(CoursMoreViewPage,1, false)} />
                         <Route path="/course_manage" exact component={Auth(CourseManage,1, false)} />
                         <Route path="/myPage" exact component={Auth(MyPage,1, false)} />
-
                         
                         <Route path="/student/MainDashBoard" exact component={Auth(StudentMainPage, 2, false)} />
                         <Route path="/student/StudentCourseMoreViewPage" exact component={Auth(StudentCourseMoreViewPage,2, false)} />
@@ -59,7 +61,7 @@ const App: React.FC = () => {
                         <Route path="/admin/AdminMainPage" exact component={Auth(AdminMainPage, 0, true)} />
                         <Route path="/admin/AdminCourseMoreViewPage" exact component={Auth(AdminCourseMoreViewPage, 0, true)} />
                         <Route path="/admin/AdminMyPage" exact component={Auth(AdminMyPage, 0, true)} />
-                        <Route path="/admin/AdminMode" exact component={Auth(AdminMode, 0, true)} />
+                        <Route path="/admin/AdminMode" exact component={Auth(AdminContentManage, 0, true)} />
                         <Route path="/admin/AdminMode/Member/member_manage" exact component={Auth(AdminMemberManage, 0, true)} />
                         <Route path="/admin/AdminMode/Banner/banner_manage" exact component={Auth(AdminBannerManage, 0, true)} />
                         <Route path="/admin/AdminMode/Organization/organization_manage" exact component={Auth(AdminOrganizationManage, 0, true)} />
@@ -75,6 +77,9 @@ const App: React.FC = () => {
 
                         
                         <Route path="/TestAll" exact component={YoutubeApi} />
+                        <Route path="/Loading" exact component={Loading} />
+                        <Route path="/ArrayControl" exact component={ArrayControl} />
+                        <Route path="/TimeControl" exact component={TimeControl} />
                         {/* <Redirect path="*" to="/"/> */}
                     </Switch>
                 </Suspense>

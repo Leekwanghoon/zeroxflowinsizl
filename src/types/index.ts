@@ -2,6 +2,7 @@ export interface FrequnetlyButton {
     size: string | number
     heightSize?: string | number
     color?: string
+    margin?: any
 }
 
 export interface FrequentlyInput {

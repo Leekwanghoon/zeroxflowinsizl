@@ -6,7 +6,8 @@ import {
     SEARCHBYCATEGORY_DATA, 
     DEADLINEINFO_DATA,
     MYINFO_DATA,
-    DASHBOARD_DATA
+    DASHBOARD_DATA,
+    MEDIATOOL_DATA
 } from "../_actions/types";
 import { 
     login, 
@@ -16,7 +17,8 @@ import {
     SearchByCategory,
     deadlineInfo,
     MyInfo,
-    DashBoardData
+    DashBoardData,
+    MediaToolData
 } from "../_actions/user_action";
 
 type CounterAction =   
@@ -27,7 +29,8 @@ type CounterAction =
     | ReturnType<typeof SearchByCategory>
     | ReturnType<typeof deadlineInfo>
     | ReturnType<typeof MyInfo>
-    | ReturnType<typeof DashBoardData>;
+    | ReturnType<typeof DashBoardData>
+    | ReturnType<typeof MediaToolData>;
     
 
 const initailState: any = {}
@@ -52,6 +55,8 @@ export default function(
                 return {...state, myInfo: action.payload}
             case DASHBOARD_DATA:
                 return {...state, myList: action.payload}
+            case MEDIATOOL_DATA:
+                return {...state, mediaToolData: action.payload}
             default:
                 return state;
             }

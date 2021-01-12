@@ -27,9 +27,10 @@ type Props = {
     value?:string
     onChange?:any
     onKeyUp?:any
+    placeholder?:any
 }
 
-const InputModule = ({onKeyUp,value,widthSize,onChange,minHeightSize="62px"}:Props) => {
+const InputModule = ({placeholder,onKeyUp,value,widthSize,onChange,minHeightSize="62px"}:Props) => {
     
     
     return(
@@ -40,6 +41,7 @@ const InputModule = ({onKeyUp,value,widthSize,onChange,minHeightSize="62px"}:Pro
                 widthSize={widthSize} 
                 minHeightSize={minHeightSize}
                 onKeyUp={onKeyUp}
+                placeholder={placeholder}
             />
         </>
     );

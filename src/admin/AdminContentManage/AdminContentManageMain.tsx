@@ -1,9 +1,9 @@
 import React,{ useState, useEffect} from 'react'
 import styled from 'styled-components';
 import PublicButton from '../../utils/Button/PublicButton';
-import setting from '../../Images/images/images/setting.png';
 import axios from 'axios';
 import ToggleButton from '../../utils/ToggleMenuBar/ToggleButton';
+import Loading from '../../utils/Loading';
 
 const PTex = styled.div`
     font-size: 1rem;
@@ -194,6 +194,8 @@ const BUtton1 = styled.button`
 `;
 
 
+
+
 type Props = {
     CookieValue: number;
     category: Number;
@@ -254,7 +256,24 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
             }
         });
     }
-
+    
+    //영상삭제하기
+    const handleClickDelete = (pk:any) => {
+        let body = {
+            contents:pk
+        }
+        axios.post(`https://1hour.school/api/v1/contents/remove`,body, {
+            headers: {
+                Authorization: CookieValue
+            }
+        }).then(response => {
+            if(response.data.status === 200) {
+                getData(page,CookieValue,category);
+            } else {
+                alert("데이터를 삭제하는데 실패했습니다");
+            }
+        });
+    }
 
 
     useEffect(() => {
@@ -262,7 +281,8 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
     },[page,category])
 
     return(
-        <div>
+        <>
+        {Data.length !== 0 ? <div>
             <div style={{padding:'24px'}}>
                 <PTex>
                     {Data.map((data:any,index:number) => {
@@ -318,7 +338,7 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
                                         </CheckInner>
                                     </CheckDIV>
                                     <UpdateDIV>
-                                        <ToggleButton />
+                                        <ToggleButton handleClickDelete={() => handleClickDelete(data.pk)} />
                                     </UpdateDIV>
                                 </Inner5DIV>
                             </Inner4DIV>
@@ -345,8 +365,9 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
                     </Nav>
                 </PaginationDiv>
         </div>
-                
-
+                :  <Loading />}
+        
+</>
     );
 }
 

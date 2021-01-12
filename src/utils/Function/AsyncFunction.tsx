@@ -39,3 +39,31 @@ export async function getCategoryModuleList(token:Number) {
         }
     }).then(response => response.data);
 }
+
+//영상마법사 등록하기
+export async function getRegisterMediaTool(token:Number, body:any) {
+    return await axios.post(`https://1hour.school/api/v1/contents/create/frame`,body, {
+        headers: {
+            Authorization: token
+        }
+    }).then(response => response.data);
+}
+
+//문장만들기
+export async function getRegisterSentence(token:Number, body:any) {
+    return await axios.post(`https://1hour.school/api/v1/contents/create/sentence`,body, {
+        headers: {
+            Authorization: token
+        }
+    }).then(response => response.data);
+}
+
+
+//번역
+export async function getTranslate(token:Number, body:any) {
+    return await axios.post(`https://1hour.school/api/v1/translate/single`,body, {
+        headers: {
+            Authorization: token
+        }
+    }).then(response => response.data);
+}
