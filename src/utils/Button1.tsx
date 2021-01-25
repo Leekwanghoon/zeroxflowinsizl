@@ -6,6 +6,7 @@ interface Props extends FrequnetlyButton {
     text: string,
     heightSize?: string,
     margin?:any,
+    borderRadius?:any,
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -13,7 +14,7 @@ interface Props extends FrequnetlyButton {
 const Container = styled.button`
     width:${(props:FrequnetlyButton) => props.size};
     border: none;
-    border-radius: 2px;
+    border-radius: ${(props:FrequnetlyButton) => props.borderRadius};
     height: ${(props:FrequnetlyButton) => props.heightSize};
     background-color: ${props => props.color};
     font-size: 12px;
@@ -25,10 +26,12 @@ const Container = styled.button`
     &:hover {
         opacity: 0.7;
     }
+    box-shadow:2px 3px 2px 0px #00000029;
 `;
 
 const Button1: React.FunctionComponent<Props> = ({
     onClick,
+    borderRadius="2px",
     text,
     size,
     margin="0px",
@@ -42,6 +45,7 @@ const Button1: React.FunctionComponent<Props> = ({
                 heightSize={heightSize} 
                 color={color}
                 margin={margin}
+                borderRadius={borderRadius}
             >
                     {text}
             </Container>

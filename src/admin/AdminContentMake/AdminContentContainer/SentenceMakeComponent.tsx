@@ -120,16 +120,12 @@ const SentenceMakeComponent = ({contents,paragraphs, setState,CookieValue,
     },[paragraphs])
 
     
-   
-
 
 
    const InputSentenceValueChange = (e:any,index:any) => {
         console.log(paragraphs,"dsdsd");
         paragraphs[index].eng = e.target.value;
         setParagraphs([...paragraphs]);
-
-
         setIndex(index);
     }
 

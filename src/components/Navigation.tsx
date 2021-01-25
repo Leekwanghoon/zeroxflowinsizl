@@ -5,11 +5,15 @@ import header from '../Images/images/images/headerLogo.png';
 
 
 const Container = styled.div`
-    height: 60px;
     display: flex;
-    width:100%;
+    width: 100%;
+    min-width: 1280pt;
+    height: 69pt;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
     justify-content: space-between;
-    border-bottom: 1px solid black;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 `;
 
 const Section = styled.div`
@@ -28,14 +32,13 @@ const Img = styled.img`
     cursor: pointer;
 `;
 
-
 const HeadList = styled.div`
     white-space:nowrap;
     display:flex;
     justify-content: space-evenly;
 `;
 const HeadListText = styled.p`
-    font-size: 10px;
+    font-size: 20pt;
     margin: 10px;
 `;
 
@@ -44,6 +47,7 @@ const Modal = styled.div`
     top: 62px;
     right: 60px;
 `;
+
 const Navigation = (props:any) => {
 
     const [showModal, setShowModal] = useState(false);
@@ -82,7 +86,7 @@ const Navigation = (props:any) => {
                     <HeadListText><Link to="/course_manage">수업관리</Link></HeadListText>
                 </HeadList>
                 <HeadList>
-                    <HeadListText><Link to="/admin/dashboard/showCourse">학생관리</Link></HeadListText>
+                    <HeadListText><Link to="/teacher/StudentManage">학생관리</Link></HeadListText>
                 </HeadList>
             </Section>
             <Section>

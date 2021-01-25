@@ -6,6 +6,7 @@ import promiseMiddleware from 'redux-promise';
 import { Provider }from 'react-redux';
 import rootReducer from './_reducers';
 import ReduxThunk from 'redux-thunk';
+
  
 declare global {
     interface Window {

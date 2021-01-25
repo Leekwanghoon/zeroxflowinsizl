@@ -1,0 +1,44 @@
+.Wrapper {
+    height: 853px;
+    margin-top: 77px;
+}
+
+.Wrapper .Title {
+    border-bottom: 1px solid rgb(44, 44, 44);
+    width: 1000pt;
+    margin: auto 270px;
+}
+.Wrapper .Title .TitleFont {
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 50px;
+}
+
+.Wrapper .Title .HeaderTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.Wrapper .Title .HeaderTitle :nth-child(1) {
+    margin-left: 40px;
+    margin-right: 100px;
+}
+
+.Wrapper .SearchSection {
+    width: 1000pt;
+    margin: auto 290pt;
+    margin-top: 35pt;
+    margin-bottom: 60pt;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.Wrapper .SearchSection :nth-child(1) {
+    margin-right: 20pt;
+}
+
+.Wrapper .TableRegion {
+    width: 1000pt;
+    margin: auto 300px;
+}

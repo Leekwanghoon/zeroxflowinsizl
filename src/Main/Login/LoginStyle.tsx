@@ -14,14 +14,15 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-    background-color:#d0b8a782;
+    background-color:rgba(255, 255, 255, 0.5);
+    backdrop-filter:blur(23pt);
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
     align-items: center;
-    width: 35%;
-    height: 58%;
+    width: 25%;
+    height: 56%;
     padding: 5rem;
 `;
 
@@ -50,7 +51,7 @@ export const Small = styled.div`
     display:flex;
     flex-direction:row;
     justify-content: space-between;
-    font-size:10px;
+    font-size:24pt;
     font-size: 8px;
     font-weight: 300;
     color: gray;

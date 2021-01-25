@@ -43,7 +43,7 @@ const ArrayControl = () => {
     }
     return(
         <>
-        {Bigdata.map((data,index) => {
+        {ArrayData.map((data,index) => {
             return(
                 <div key={index}>
                     <textarea onChange={(e) => onChageData(e,index)} defaultValue={data.kor}></textarea>

@@ -69,7 +69,8 @@ type Props = {
 
 
 
-
+//AdminContentMakeManage type은 여기서 바꿔
+//얘부모는 AdminContentMakeManageMain
 const MedialToolManageComponent = ({setContents,
     setParagraphs, setState,CookieValue}:Props) => {
     
@@ -81,14 +82,13 @@ const MedialToolManageComponent = ({setContents,
     const [Captions,setCaptions] = useState<string>("");
 
 
-
     const [totalTime, setTotalTime] = useState<number | undefined>(0);
 
     const [youtubeId, setYoutubeID] = useState<string>("");
 
 
     const [EmptyArray, setEmptyArray] = useState<number[]>([]);
-    console.log(EmptyArray);
+    console.log(EmptyArray,"EmptyArray");
 
     
     const onNextButtonClick = () => {
@@ -141,15 +141,14 @@ const MedialToolManageComponent = ({setContents,
         setYoutubeTitle(YoutubeTitle);
     }
 
-    //삭제하는거 해결해야함
     const onClickCheckButton = (pk:any,index:any) => {
         if(EmptyArray.includes(pk)) {
-            
             //pk = 1,2,3,4,5 index = 0,1,2,3,4
             // console.log(EmptyArray.findIndex(pk));
-            console.log(pk,"pk");
-            console.log(EmptyArray,"저");
-            console.log(EmptyArray,"후");
+            console.log(EmptyArray.indexOf(pk));
+            EmptyArray.splice(EmptyArray.indexOf(pk),1);
+            console.log(EmptyArray);
+            setEmptyArray(EmptyArray);
         } else {
             const array1 = EmptyArray.concat(pk);
             array1.sort(function(a,b) {
@@ -160,7 +159,6 @@ const MedialToolManageComponent = ({setContents,
             // const array1 = EmptyArray.splice(index,0,pk);
             setEmptyArray(array1);
         }
-        
         //State2.로 변화해줘야하고
         // 유효성처리도 해줘야한다.
     }
@@ -187,7 +185,7 @@ const MedialToolManageComponent = ({setContents,
             </Title>
             <TopInputDiv>
                 <InputModule value={youtubeURL} onChange={youtubeUrlChangeHandler} widthSize="624pt" />
-                <CategoryModule onClickCheckButton={onClickCheckButton} CookieValue={CookieValue} />
+                <CategoryModule EmptyArray={EmptyArray} onClickCheckButton={onClickCheckButton} CookieValue={CookieValue} />
             </TopInputDiv>
             <div style={{position:'absolute', top:'530px'}}>
             {youtubeId !== "" ? <YoutubeDIV>

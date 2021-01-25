@@ -17,10 +17,8 @@ import StudentCourseMoreViewPage from './student/StudentCourseMoreViewPage';
 import StudentMyPage from './student/StudentMyPage';
 import MyReport from './student/MyReport';
 import AdminMainPage from './admin/AdminMainPage';
-import TestAll from './AdminNaviContentManage/AdminNaviContentContainer';
 import AdminMyPage from './Main/MyPage/AdminMyPage';
 import AdminCourseMoreViewPage from './admin/AdminCourseMoreViewPage';
-import AdminMode from './admin/AdminMode';
 import AdminMemberManage from './admin/AdminMemberManage/AdminMemberManage';
 import AdminOrganizationManage from './admin/AdminOrganizationManage/AdminOrganizationManage';
 import AdminBannerManage from './admin/AdminBanner/AdminBannerManage';
@@ -29,10 +27,16 @@ import AdminPlayListManage from './admin/AdminPlayListManage/AdminPlayListManage
 import AdminContentManage from './admin/AdminContentManage/AdminContentManage';
 import AdminHomeworkManage from './admin/AdminHomeworkManage/AdminHomeworkManage';
 import AdminContentMakeManage from './admin/AdminContentMake/AdminContentMakeManage';
-import YoutubeApi from './YoutubeApi/YoutubeApi';
-import Loading from './utils/Loading';
-import ArrayControl from './utils/ArrayControl';
-import TimeControl from './YoutubeApi/TimeControl';
+import PaginationIndex from './utils/Pagination/PaginationIndex';
+import TeacherStudentManage from './teacher/StudentManage/TeacherStudentManage';
+import TeacherStudentManageReport from './teacher/StudentManage/TeacherStudentManageReport';
+
+import NewChart from './utils/Chart/NewChart';
+import Chart from './utils/Chart/Chart';
+import Calendar from './utils/Calendar/Calendar';
+
+import PrototypeTest from './utils/StudyZone/PrototypeTest';
+import TeacherStudentManageTotalCalendarReport from './teacher/StudentManage/TeacherStudentManageTotalCalendarReport';
 
 const App: React.FC = () => {
     return (
@@ -40,7 +44,7 @@ const App: React.FC = () => {
             <ThemeProvider theme={theme}>
                 <GlobalStyle/>
                 <Router>
-                <Suspense fallback={(<div>Loading...</div>)}>
+                <Suspense fallback={(<div>Loading...</div>)}> 
                     <Switch>
                         <Route path="/" exact component={LandingPage}/>
                         <Route path="/login" exact component={Auth(Login,4)}/>
@@ -52,6 +56,13 @@ const App: React.FC = () => {
                         <Route path="/CourseMoreViewPage" exact component={Auth(CoursMoreViewPage,1, false)} />
                         <Route path="/course_manage" exact component={Auth(CourseManage,1, false)} />
                         <Route path="/myPage" exact component={Auth(MyPage,1, false)} />
+                        
+
+
+                        <Route path="/teacher/StudentManage" exact component={Auth(TeacherStudentManage, 1, false)} />
+                        <Route path="/report" exact component={Auth(TeacherStudentManageReport, 1, false)} />
+                        <Route path="/calendar" exact component={Auth(TeacherStudentManageTotalCalendarReport, 1, false)} />
+                        
                         
                         <Route path="/student/MainDashBoard" exact component={Auth(StudentMainPage, 2, false)} />
                         <Route path="/student/StudentCourseMoreViewPage" exact component={Auth(StudentCourseMoreViewPage,2, false)} />
@@ -74,12 +85,22 @@ const App: React.FC = () => {
                         
                         
                         <Route path="/admin/Edit/mediatool_manage" exact component={Auth(AdminContentMakeManage, 0, true)} />
+                        
+                        <Route path="/page" exact component={PaginationIndex} />
+                        
+                        
+                        <Route path="/chart" exact component={Chart} />
+
+
+
+                        <Route path="/JavascriptTest" exact component={PrototypeTest} />
+                        <Route path="/calendar" exact component={Calendar} />
 
                         
-                        <Route path="/TestAll" exact component={YoutubeApi} />
-                        <Route path="/Loading" exact component={Loading} />
-                        <Route path="/ArrayControl" exact component={ArrayControl} />
-                        <Route path="/TimeControl" exact component={TimeControl} />
+
+
+
+                        
                         {/* <Redirect path="*" to="/"/> */}
                     </Switch>
                 </Suspense>

@@ -4,6 +4,8 @@ import styled from 'styled-components';
 type styleProps = {
     widthSize: string;
     minHeightSize: string;
+    marginSize: string;
+    marginSizeRight: string;
 
 }
 
@@ -19,18 +21,24 @@ const Input = styled.input`
     color: rgb(112, 112, 112);
     font-family: "Helvetica Neue", Light;
     min-height: ${(props:styleProps) => props.minHeightSize};
+    margin-left:${(props:styleProps) => props.marginSize};
+    margin-right:${(props:styleProps) => props.marginSizeRight};
 `;
 
 type Props = {
     widthSize: string
     minHeightSize?:string
-    value?:string
+    value?:string | number
     onChange?:any
     onKeyUp?:any
     placeholder?:any
+    marginSize?:any
+    onMouseMove?:any
+    onClick?:any
+    marginSizeRight?:any
 }
 
-const InputModule = ({placeholder,onKeyUp,value,widthSize,onChange,minHeightSize="62px"}:Props) => {
+const InputModule = ({marginSizeRight="0px",onClick,onMouseMove,marginSize="0px",placeholder,onKeyUp,value,widthSize,onChange,minHeightSize="62px"}:Props) => {
     
     
     return(
@@ -42,6 +50,10 @@ const InputModule = ({placeholder,onKeyUp,value,widthSize,onChange,minHeightSize
                 minHeightSize={minHeightSize}
                 onKeyUp={onKeyUp}
                 placeholder={placeholder}
+                marginSize={marginSize}
+                onMouseMove={onMouseMove}
+                onClick={onClick}
+                marginSizeRight={marginSizeRight}
             />
         </>
     );

@@ -22,6 +22,7 @@ const Wrapper = styled.div`
 const HeaderTitle = styled.div`
     margin: 20px auto;
     display:flex;
+    align-items:center;
     flex-direction: row;
 `;
 
@@ -29,7 +30,7 @@ const Img = styled.img`
     height: auto;
     max-width: 100%;
     width: 68pt;
-    height: 48pt;
+    height: fit-content;
 `;
 
 
@@ -64,7 +65,7 @@ const AdminNaviLeft:React.FC = () => {
                     <TestAll />
                 </Wrapper>
                 <BackButton>
-                    <BackTitle><Link to="/admin/AdminMode">1 hour로 돌아가기</Link></BackTitle>
+                    <BackTitle><Link to="/admin/AdminMainPage">1 hour로 돌아가기</Link></BackTitle>
                 </BackButton>
         </NaviRegion>
     );

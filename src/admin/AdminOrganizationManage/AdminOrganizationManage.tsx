@@ -48,7 +48,7 @@ const AdminOrganizationManage:React.FC = (props:any) => {
     return(
         <Container>
             <Helmet>
-                <title>Admin | 회원관리</title>
+                <title>Admin | 기관관리</title>
             </Helmet>
             <Navigation>
                 <AdminNaviLeft />

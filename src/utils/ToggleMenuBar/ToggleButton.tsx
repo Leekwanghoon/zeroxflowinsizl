@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
-  handleClickDelete:any;
+  handleClickDelete?:any;
 }
 
 export default function ToggleButton({handleClickDelete}:Props) {

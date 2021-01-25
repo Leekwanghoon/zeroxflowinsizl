@@ -90,7 +90,7 @@ const MyReport = (props:any) => {
                             </FontRegion>
                     </Header>
                     { isClickReport && !isClickHistory ? <>
-                        <Calendar />
+                        <Calendar email="" cookie="" />
                     </> : 
                     <div>
                         History눌렀당

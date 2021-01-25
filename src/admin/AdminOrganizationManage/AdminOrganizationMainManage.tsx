@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import pencil from '../../Images/images/images/IconMaterialEdit.png';
 import Button1 from '../../utils/Button1';
+import Loading from '../../utils/Loading';
+import PaginationModule from '../../utils/Pagination/PaginationModule';
 const SearchSection = styled.div`
     margin-Top: 10px;
     display: flex;
@@ -34,6 +36,21 @@ const Tbody = styled.tbody`
     font: 13px / 15px "Helvetica Neue";
 `;
 
+type TDType = {
+    IsEven?: boolean;
+    index: number;
+}
+
+const TD = styled.td`
+    ${(props:TDType) => props.index%2 !== 0 ? 
+        `background: #F2F2F2;` 
+        :
+        `background: #FFFFFF;`
+    }
+    border:0.5pt solid #F2F2F2;
+    height: 30px;
+`;
+
 type Props = {
     type: Number;
     CookieValue: Number;
@@ -49,6 +66,11 @@ const AdminOrganizationMainManage:React.FC<Props> = ({type,CookieValue}) => {
     const [OrganizationData, setOrganizationData] = useState([]);
     const [searchValue, setValue] = useState<string>("");
     
+
+    const length = OrganizationData.length;
+
+    const [IsEven, setIsEven] = useState<boolean>(false);
+
     const searchChange = (e:any) => {
         console.log(e.target.value);
         setValue(e.target.value);
@@ -95,6 +117,11 @@ const AdminOrganizationMainManage:React.FC<Props> = ({type,CookieValue}) => {
          getData();
      },[type])
 
+     const PageClick = (i:number) => {
+        console.log(i,"dkdk");
+        setPage(i);
+    }
+
     return(
         <>
             <SearchSection>
@@ -128,24 +155,31 @@ const AdminOrganizationMainManage:React.FC<Props> = ({type,CookieValue}) => {
                             } else if( member.type === 2) {
                                 member.type = "학생";
                             }
+                            //%는 나머지
                             return(
-                                    <tr key={index}>
-                                        <td>#</td>
-                                        <td>{index + 1}</td>
-                                        <td>{member.name}</td>
-                                        <td>{member.type}</td>
-                                        <td>{member.region}</td>
-                                        <td>{member.users}/({member.teachers})</td>
-                                        <td>{member.created}</td>
-                                        <td style={{cursor:'pointer'}}><img src={pencil} alt="logo" width="11px" height="11px" /></td>
-                                    </tr>
+                                <tr key={index}>
+                                    <td></td>
+                                    <td>#{index + 1}</td>
+                                    <TD index={index} IsEven={IsEven}>{member.name}</TD>
+                                    <TD index={index} IsEven={IsEven}>{member.type}</TD>
+                                    <TD index={index} IsEven={IsEven}>{member.region}</TD>
+                                    <TD index={index} IsEven={IsEven}>{member.users}/({member.teachers})</TD>
+                                    <TD index={index} IsEven={IsEven}>{member.created}</TD>
+                                    <td style={{cursor:'pointer'}}><img src={pencil} alt="logo" width="11px" height="11px" /></td>
+                                </tr>
                             );
                         })
                          : 
-                            <div>로딩중</div>
+                         <Loading />
                         }
                         </Tbody>
                     </Table>
+                    <div style={{
+                        display:'flex',
+                        justifyContent:'center'
+                    }}>
+                        <PaginationModule currentPage={page} TotalPage={length} PageClick={PageClick} />         
+                    </div>
                 </div>
 
         </>

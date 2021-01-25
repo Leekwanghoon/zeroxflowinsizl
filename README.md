@@ -1,13 +1,22 @@
 https://onehour.co.kr/authorization/register    
 
-
-
 https://xd.adobe.com/view/62f96172-1df8-495c-a43a-e7bea478280e-37aa/screen/b82a58c7-10a6-467b-b95e-e766bc45bf32/
 
+
+//최적화방법
+https://znznzn.tistory.com/29
+
+
+// sin cos이용하면 여러 모양을 컨트롤 할수 있다.chart.jsx
+
+
+ctrl + shift + f
 
 가입
 vkdnj4158@naver.com
 123456
+
+
 
 
 //선생님

@@ -9,4 +9,3 @@ const useInput = (defalutValue: any) => {
     return {value, setValue, onChange};
 }
 export default useInput;
-

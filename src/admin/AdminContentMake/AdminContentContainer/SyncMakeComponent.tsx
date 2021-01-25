@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Youtube from 'react-youtube';
 import Button1 from '../../../utils/Button1';
 import { PlayIcon, RightArrow, StopIcon } from '../../../utils/Icons';
+import TimeApi from '../../../utils/Function/TimeApi';
+import getTimeApi from '../../../utils/Function/getTimeApi';
+import getStringTimeApi from '../../../utils/Function/getStringTimeApi';
+import { getSync } from '../../../utils/Function/AsyncFunction';
 const Container = styled.div`
     display:flex;
 `;
@@ -107,423 +111,176 @@ const SPAN = styled.span`
     margin: 10px;
 `;
 
+const NextButtonWrap = styled.div`
+    display:flex;
+    justify-content: flex-end;
+`;
+
 type Props = {
     SentenceContents:any;
     SentenceUrl:any;
     SentenceParagraphs:any;
     setState:any;
     CookieValue:any;
+    setMakeWordContents:any;
+    setMakeWordParagraphs:any;
 }
 
-const SyncMakeComponent = ({SentenceContents,
+type Object = {
+    start:any;
+    end:any;
+}
+
+
+
+const SyncMakeComponent = 
+({SentenceContents,
 SentenceUrl,
 SentenceParagraphs,
 setState,
-CookieValue}:Props) => {
+CookieValue,
+setMakeWordContents,
+setMakeWordParagraphs}:Props) => {
 
 
+    const [dummyData,setDummyData] = useState<Object[]>(SentenceParagraphs);
+   
+    const length = SentenceParagraphs.length
+    const newArray = Array(length);
+
+
+
+
+    const [youtube,setYoutubeData]  = useState<any>();
     const [totalTime, setTotalTime] = useState<number | undefined>(0);
+    const [currentTime, setCurrentTime] = useState<number | undefined>(0);
     
+    //2s > 2s시작
+    //fill 0값을 0번째부터 lenght까지 넣는다.
+    const [leftInputValue,setleftInputValue] = useState<number[]>(newArray.fill(0,0,length)); //[0,0,0,0]
+    const [RightInputValue,setRightInputValue] = useState<number[]>(newArray.fill(0,0,length));
     
-    const [leftInputTime,setleftInputTime] = useState<string>("00:00:00.000");
-    const [rightInputTime,setrightInputTime] = useState<string>("00:00:00.000");
+    console.log(leftInputValue);
 
-    const [leftInputValue,setleftInputValue] = useState(0);
-    const [RightInputValue,setRightInputValue] = useState(0);
-    
-    console.log(totalTime);
     let body = {
         contents:SentenceContents,
-        sentences:SentenceParagraphs
+        sentences:dummyData
     }
 
-    // const youtubeUrlChangeHandler = (e:any) => {
-    //     setYoutubeUrl(e.target.value);
-    //     const suburl = e.target.value.slice(32,43);
-    //     setYoutubeID(suburl);
-    // }
-
-
-    console.log(SentenceContents,
-        SentenceUrl,
-        SentenceParagraphs);
+    console.log(SentenceContents,SentenceUrl,SentenceParagraphs);
 
     const opts:any = {
-        width: "600",
-        height: "400",
+        width: "100%",
+        height: "400px",
         playerVars: {
             'origin': 'http://localhost:3000'
         },
     }
-
-    const Id = "https://www.youtube.com/watch?v=_T9FSwv1FrI";
+    const Id = SentenceUrl;
+    // const Id = "https://www.youtube.com/watch?v=eddASI6vBOU";
     const youtubeId = Id.slice(32,43);
-    console.log(youtubeId,"잘음");
-
     const ongetYoutubeApi = (e:any) => {
-
-        const duration:any = e.target.playerInfo.duration;
-        const YoutubeTitle:any = e.target.playerInfo.videoData.title;
+        console.log(e.target,"관찰");
+        const duration:any = e.target.playerInfo.duration; //총길이
+        const currentTime:any = e.target.playerInfo.currentTime; //현재시간 0
+        console.log(currentTime,"현시간");
         setTotalTime(duration);
+        setYoutubeData(e.target);
+        setCurrentTime(currentTime); //영상 현재시간
         // setYoutubeTitle(YoutubeTitle);
     }
 
-
-    const onClickLeftAddButton = () => {
-        console.log("왼쪽 눌렀다");
-        //시 분 초
-        //"28:20:16.000"
-        const getCurrentHour = leftInputTime.substring(0,2);
-        const getCurrentMin = leftInputTime.substring(3,5);
-        const getCurrentSeconds = leftInputTime.substring(6,8);
-
-
-        console.log(getCurrentMin);
-        console.log(getCurrentSeconds);
-        console.log(parseInt(getCurrentHour));
-        console.log(parseInt(getCurrentMin));
-        console.log(parseInt(getCurrentSeconds));
-
-        const HourToSeconds = parseInt(getCurrentHour)*60*60;
-        const MinToSeconds = parseInt(getCurrentMin)*60;
-        const SecondsToSeconds = parseInt(getCurrentSeconds);
-
-        const TotalSeconds = HourToSeconds + MinToSeconds + SecondsToSeconds;
-        console.log(TotalSeconds,"총시간초");
-        
-
-        //10:10:16.000
-        console.log(HourToSeconds,"시"); //10 * 60 * 60 = 36000
-        console.log(MinToSeconds,"분"); //28 * 60 = 1680
-        console.log(SecondsToSeconds,"초"); //28 * 60 = 1680
-        console.log(leftInputValue,"leftInputValue"); //28 * 60 = 1680
-
-
-
-        const AddSeconds = Number(TotalSeconds) + Number(leftInputValue); // 2902
-
-        let hour:any = Math.floor(AddSeconds / 3600); //10시간
-        let min:any = Math.floor((AddSeconds - hour*3600)/60); //10분
-        let seconds:any = (AddSeconds - hour*3600)%60;
-        console.log(hour,"시간"); //10시간
-        console.log(min,"분"); //10분
-        console.log(seconds,"초"); //16초
-       
-        if(hour < 10) {
-             hour = "0" + hour;
-        }
-        if( min < 10 ) {
-            min = "0" + min;
-         }
-        if( seconds < 10 ) {
-            seconds = "0" + seconds;
-         }
-
-
-        const newLeftTime = String(hour) + ":" + String(min) + ":" + String(seconds) + ".000";
-        setleftInputTime(newLeftTime);
-
+    //왼쪽 추가버튼 누기기기
+    const onClickLeftAddButton = (start:any,index:number) => {  
+        const newLeftTime = TimeApi(start,leftInputValue[index],false,false);
+        dummyData[index].start = newLeftTime;
+        setDummyData([...dummyData]);
     }
-
-    const onClickRightAddButton = () => {
-        console.log("오른쪽 눌렀다");
-        //시 분 초
-        //"28:20:16.000"
-        const getCurrentHour = rightInputTime.substring(0,2);
-        const getCurrentMin = rightInputTime.substring(3,5);
-        const getCurrentSeconds = rightInputTime.substring(6,8);
-
-
-        console.log(getCurrentMin);
-        console.log(getCurrentSeconds);
-        console.log(parseInt(getCurrentHour));
-        console.log(parseInt(getCurrentMin));
-        console.log(parseInt(getCurrentSeconds));
-
-        const HourToSeconds = parseInt(getCurrentHour)*60*60;
-        const MinToSeconds = parseInt(getCurrentMin)*60;
-        const SecondsToSeconds = parseInt(getCurrentSeconds);
-
-        const TotalSeconds = HourToSeconds + MinToSeconds + SecondsToSeconds;
-        console.log(TotalSeconds,"총시간초");
-        
-
-        //10:10:16.000
-        console.log(HourToSeconds,"시"); //10 * 60 * 60 = 36000
-        console.log(MinToSeconds,"분"); //28 * 60 = 1680
-        console.log(SecondsToSeconds,"초"); //28 * 60 = 1680
-        console.log(leftInputValue,"leftInputValue"); //28 * 60 = 1680
-
-
-
-        const AddSeconds = Number(TotalSeconds) + Number(RightInputValue); // 2902
-
-        let hour:any = Math.floor(AddSeconds / 3600); //10시간
-        let min:any = Math.floor((AddSeconds - hour*3600)/60); //10분
-        let seconds:any = (AddSeconds - hour*3600)%60;
-        console.log(hour,"시간"); //10시간
-        console.log(min,"분"); //10분
-        console.log(seconds,"초"); //16초
-       
-        if(hour < 10) {
-             hour = "0" + hour;
-        }
-        if( min < 10 ) {
-            min = "0" + min;
-         }
-        if( seconds < 10 ) {
-            seconds = "0" + seconds;
-         }
-
-
-        const newLeftTime = String(hour) + ":" + String(min) + ":" + String(seconds) + ".000";
-        setrightInputTime(newLeftTime);
-    }
-
-    const leftInputValueChange = (e:any) => {
-        setleftInputValue(e.target.value);
-    }
-    const RightInputValueChange = (e:any) => {
-        setRightInputValue(e.target.value);
-    }
-
-    const onClickButton = () => {
-        console.log("잇고끊기 버튼을 누름");
-    }
-
-    const onChangeLeftUpOneSecondsTime = () => {
-        console.log("오른쪽 눌렀다");
-        //시 분 초
-        //"28:20:16.000"
-        const getCurrentHour = leftInputTime.substring(0,2);
-        const getCurrentMin = leftInputTime.substring(3,5);
-        const getCurrentSeconds = leftInputTime.substring(6,8);
-
-
-        console.log(getCurrentMin);
-        console.log(getCurrentSeconds);
-        console.log(parseInt(getCurrentHour));
-        console.log(parseInt(getCurrentMin));
-        console.log(parseInt(getCurrentSeconds));
-
-        const HourToSeconds = parseInt(getCurrentHour)*60*60;
-        const MinToSeconds = parseInt(getCurrentMin)*60;
-        const SecondsToSeconds = parseInt(getCurrentSeconds);
-
-        const TotalSeconds = HourToSeconds + MinToSeconds + SecondsToSeconds;
-        console.log(TotalSeconds,"총시간초");
-        
-
-        //10:10:16.000
-        console.log(HourToSeconds,"시"); //10 * 60 * 60 = 36000
-        console.log(MinToSeconds,"분"); //28 * 60 = 1680
-        console.log(SecondsToSeconds,"초"); //28 * 60 = 1680
-        console.log(leftInputValue,"leftInputValue"); //28 * 60 = 1680
-
-
-
-        const AddSeconds = Number(TotalSeconds) + Number(1); // 2902
-
-        let hour:any = Math.floor(AddSeconds / 3600); //10시간
-        let min:any = Math.floor((AddSeconds - hour*3600)/60); //10분
-        let seconds:any = (AddSeconds - hour*3600)%60;
-        console.log(hour,"시간"); //10시간
-        console.log(min,"분"); //10분
-        console.log(seconds,"초"); //16초
-       
-        if(hour < 10) {
-             hour = "0" + hour;
-        }
-        if( min < 10 ) {
-            min = "0" + min;
-         }
-        if( seconds < 10 ) {
-            seconds = "0" + seconds;
-         }
-
-
-        const newLeftTime = String(hour) + ":" + String(min) + ":" + String(seconds) + ".000";
-        setleftInputTime(newLeftTime);
-    }
-    const onChangeLeftDownOneSecondsTime = () => {
-        console.log("오른쪽 눌렀다");
-        //시 분 초
-        //"28:20:16.000"
-        const getCurrentHour = leftInputTime.substring(0,2);
-        const getCurrentMin = leftInputTime.substring(3,5);
-        const getCurrentSeconds = leftInputTime.substring(6,8);
-
-
-        console.log(getCurrentMin);
-        console.log(getCurrentSeconds);
-        console.log(parseInt(getCurrentHour));
-        console.log(parseInt(getCurrentMin));
-        console.log(parseInt(getCurrentSeconds));
-
-        const HourToSeconds = parseInt(getCurrentHour)*60*60;
-        const MinToSeconds = parseInt(getCurrentMin)*60;
-        const SecondsToSeconds = parseInt(getCurrentSeconds);
-
-        const TotalSeconds = HourToSeconds + MinToSeconds + SecondsToSeconds;
-        console.log(TotalSeconds,"총시간초");
-        
-
-        //10:10:16.000
-        console.log(HourToSeconds,"시"); //10 * 60 * 60 = 36000
-        console.log(MinToSeconds,"분"); //28 * 60 = 1680
-        console.log(SecondsToSeconds,"초"); //28 * 60 = 1680
-        console.log(leftInputValue,"leftInputValue"); //28 * 60 = 1680
-
-
-
-        let AddSeconds = Number(TotalSeconds) - Number(1); // 2902
-
-        if(AddSeconds < 0) {
-            AddSeconds = 0;
-        }
-
-        let hour:any = Math.floor(AddSeconds / 3600); //10시간
-        let min:any = Math.floor((AddSeconds - hour*3600)/60); //10분
-        let seconds:any = (AddSeconds - hour*3600)%60;
-        console.log(hour,"시간"); //10시간
-        console.log(min,"분"); //10분
-        console.log(seconds,"초"); //16초
-       
-        if(hour < 10) {
-             hour = "0" + hour;
-        }
-        if( min < 10 ) {
-            min = "0" + min;
-         }
-        if( seconds < 10 ) {
-            seconds = "0" + seconds;
-         }
-
-
-        
-
-        const newLeftTime = String(hour) + ":" + String(min) + ":" + String(seconds) + ".000";
-        setleftInputTime(newLeftTime);
-    }
-
-    const onChangeRightDownOneSecondsTime = () => {
-        console.log("오른쪽 눌렀다");
-        //시 분 초
-        //"28:20:16.000"
-        const getCurrentHour = rightInputTime.substring(0,2);
-        const getCurrentMin = rightInputTime.substring(3,5);
-        const getCurrentSeconds = rightInputTime.substring(6,8);
-
-
-        console.log(getCurrentMin);
-        console.log(getCurrentSeconds);
-        console.log(parseInt(getCurrentHour));
-        console.log(parseInt(getCurrentMin));
-        console.log(parseInt(getCurrentSeconds));
-
-        const HourToSeconds = parseInt(getCurrentHour)*60*60;
-        const MinToSeconds = parseInt(getCurrentMin)*60;
-        const SecondsToSeconds = parseInt(getCurrentSeconds);
-
-        const TotalSeconds = HourToSeconds + MinToSeconds + SecondsToSeconds;
-        console.log(TotalSeconds,"총시간초");
-        
-
-        //10:10:16.000
-        console.log(HourToSeconds,"시"); //10 * 60 * 60 = 36000
-        console.log(MinToSeconds,"분"); //28 * 60 = 1680
-        console.log(SecondsToSeconds,"초"); //28 * 60 = 1680
-        console.log(leftInputValue,"leftInputValue"); //28 * 60 = 1680
-
-
-
-        let AddSeconds = Number(TotalSeconds) - Number(1); // 2902
-
-        if(AddSeconds < 0) {
-            AddSeconds = 0;
-        }
-
-        let hour:any = Math.floor(AddSeconds / 3600); //10시간
-        let min:any = Math.floor((AddSeconds - hour*3600)/60); //10분
-        let seconds:any = (AddSeconds - hour*3600)%60;
-        console.log(hour,"시간"); //10시간
-        console.log(min,"분"); //10분
-        console.log(seconds,"초"); //16초
-       
-        if(hour < 10) {
-             hour = "0" + hour;
-        }
-        if( min < 10 ) {
-            min = "0" + min;
-         }
-        if( seconds < 10 ) {
-            seconds = "0" + seconds;
-         }
-
-        const newLeftTime = String(hour) + ":" + String(min) + ":" + String(seconds) + ".000";
-        setrightInputTime(newLeftTime);
-    }
-
-    const onChangeRightUpOneSecondsTime = () => {
-        console.log("오른쪽 눌렀다");
-        //시 분 초
-        //"28:20:16.000"
-        const getCurrentHour = rightInputTime.substring(0,2);
-        const getCurrentMin = rightInputTime.substring(3,5);
-        const getCurrentSeconds = rightInputTime.substring(6,8);
-
-
-        console.log(getCurrentMin);
-        console.log(getCurrentSeconds);
-        console.log(parseInt(getCurrentHour));
-        console.log(parseInt(getCurrentMin));
-        console.log(parseInt(getCurrentSeconds));
-
-        const HourToSeconds = parseInt(getCurrentHour)*60*60;
-        const MinToSeconds = parseInt(getCurrentMin)*60;
-        const SecondsToSeconds = parseInt(getCurrentSeconds);
-
-        const TotalSeconds = HourToSeconds + MinToSeconds + SecondsToSeconds;
-        console.log(TotalSeconds,"총시간초");
-        
-
-        //10:10:16.000
-        console.log(HourToSeconds,"시"); //10 * 60 * 60 = 36000
-        console.log(MinToSeconds,"분"); //28 * 60 = 1680
-        console.log(SecondsToSeconds,"초"); //28 * 60 = 1680
-        console.log(leftInputValue,"leftInputValue"); //28 * 60 = 1680
-
-
-
-        let AddSeconds = Number(TotalSeconds) + Number(1); // 2902
-
     
-        let hour:any = Math.floor(AddSeconds / 3600); //10시간
-        let min:any = Math.floor((AddSeconds - hour*3600)/60); //10분
-        let seconds:any = (AddSeconds - hour*3600)%60;
-        console.log(hour,"시간"); //10시간
-        console.log(min,"분"); //10분
-        console.log(seconds,"초"); //16초
-       
-        if(hour < 10) {
-             hour = "0" + hour;
-        }
-        if( min < 10 ) {
-            min = "0" + min;
-         }
-        if( seconds < 10 ) {
-            seconds = "0" + seconds;
-         }
-
-        const newLeftTime = String(hour) + ":" + String(min) + ":" + String(seconds) + ".000";
-        setrightInputTime(newLeftTime);
+    //오른쪽 추가버튼 누리기
+    const onClickRightAddButton = (end:any,index:number) => {
+        const newLeftTime = TimeApi(end,RightInputValue[index],false,false);
+        dummyData[index].end = newLeftTime;
+        setDummyData([...dummyData]);
     }
-        
+
+    //왼쪽시간변화시키기
+    const leftInputValueChange = (e:any,index:number) => {
+        leftInputValue[index] = e.target.value;
+        setleftInputValue([...leftInputValue]);
+    }
+    //오른쪽 시간변화시키기
+    const RightInputValueChange = (e:any,index:number) => {
+        RightInputValue[index] = e.target.value;
+        setRightInputValue([...RightInputValue]);
+    }
+    //왼쪽화살표 1초올린거
+    const onChangeLeftUpOneSecondsTime = (e:any,index:number) => {   
+        const newLeftTime = TimeApi(dummyData[index].start,leftInputValue[index],true,false);
+        dummyData[index].start = newLeftTime;
+        setDummyData([...dummyData]);
+    }
+     //왼쪽화살표 1초내리기
+    const onChangeLeftDownOneSecondsTime = (e:any,index:number) => {
+        const newLeftTime = TimeApi(dummyData[index].start,leftInputValue[index],true,true);
+        dummyData[index].start = newLeftTime;
+        setDummyData([...dummyData]);
+    }
+    //오른쪽화살표 1초내리기
+    const onChangeRightDownOneSecondsTime = (e:any,index:number) => {
+        const newLeftTime = TimeApi(dummyData[index].end,RightInputValue[index],true,true);
+        dummyData[index].end = newLeftTime;
+        setDummyData([...dummyData]);
+    }
+    //오른쪽화살표 1초올리기
+    const onChangeRightUpOneSecondsTime = (e:any,index:number) => {
+        const newLeftTime = TimeApi(dummyData[index].end,RightInputValue[index],true,false);
+        dummyData[index].end = newLeftTime;
+        setDummyData([...dummyData]);
+    }
+    //시작버튼
+    const onStartPlayVideo = (index:number) => {
+        const currentSeconds = getTimeApi(dummyData[index].start);
+        console.log(currentSeconds);
+        youtube.seekTo(currentSeconds);
+        youtube.playVideo();
+    }
+    //잇고끊기
+    const onClickButton = (index:number) => {
+        console.log("잇고끊기 버튼을 누름");
+        youtube.pauseVideo();
+        const Time = getStringTimeApi(currentTime);
+        console.log(Time,"현시간");
+        dummyData[index].end = Time;
+        dummyData[index+1].start = Time;
+        setDummyData([...dummyData]);
+    }
+    const onStopPlayVideo = () => {
+        console.log("StopButton누름");
+        youtube.pauseVideo();
+    }
+
+    const onStateChange = (e:any) => {
+        const currentTime:any = e.target.playerInfo.currentTime;
+        console.log(currentTime,"현시간");
+        setYoutubeData(e.target);
+        setCurrentTime(currentTime); //영상 현재시간
+    }
+
+    const GoMakeSentence =(e:any) => {
+        getSync(CookieValue,body)
+        .then(function(data:any) {
+            setMakeWordContents(data.data.contents);
+            setMakeWordParagraphs(data.data.paragraphs);
+        })
+        setState(4);
+    }
+
     return(
         <Container>
             <LeftHalf>
                 <YoutubeRegion>
-                    <Youtube onReady={ongetYoutubeApi} opts={opts} videoId={youtubeId} />
+                    <Youtube onStateChange={onStateChange} onReady={ongetYoutubeApi} opts={opts} videoId={youtubeId} />
                 </YoutubeRegion>
                 <div>
                     <Description>
@@ -542,54 +299,65 @@ CookieValue}:Props) => {
                 </div>
             </LeftHalf>
             <RightHalf>
-                <RightWrapper>
-                    <TextArea readOnly defaultValue="데이터 받아오는 곳 수정이 안됨" />
-                    <TimeRegion>
-                        <Input value={leftInputTime} />
-                        <Input value={rightInputTime} />
-                    </TimeRegion>
-                    <TimeRegion>
-                        <Input type="number" value={leftInputValue} onChange={leftInputValueChange} />
-                        <Input type="number" value={RightInputValue} onChange={RightInputValueChange} />
-                    </TimeRegion>
-                    <TimeRegion>
-                        <Button1 heightSize="40px" text="추가" onClick={onClickLeftAddButton} size="60px" />
-                        <Button1 heightSize="40px" text="추가" onClick={onClickRightAddButton} size="60px" />
-                    </TimeRegion>
-                </RightWrapper>
-                <RightBottomRegion>
-                    <RightBottomLeft>
-                        <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
-                            <div onClick={onChangeLeftDownOneSecondsTime} style={{transform: "rotate(180deg)"}}><RightArrow /></div>
-                            <SPAN>1.0</SPAN>
-                            <div onClick={onChangeLeftUpOneSecondsTime}><RightArrow /></div>
-                        </div>
-                        <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
-                            <div style={{transform: "rotate(180deg)"}}><RightArrow /></div>
-                            <SPAN>0.3</SPAN>
-                            <div><RightArrow /></div>
-                        </div>
-                    </RightBottomLeft>
-                    <RightBottomMiddle>
-                        <RightDiv>
-                            <PlayIcon size="30px" />
-                            <Button1 margin="40px" text="잇고 끊기" size="100px" heightSize="40px" onClick={onClickButton} />
-                            <StopIcon size="30px" />
-                        </RightDiv>
-                    </RightBottomMiddle>
-                    <RightBottomRight>
-                        <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
-                            <div onClick={onChangeRightDownOneSecondsTime} style={{transform: "rotate(180deg)"}}><RightArrow /></div>
-                            <SPAN>1.0</SPAN>
-                            <div onClick={onChangeRightUpOneSecondsTime}><RightArrow /></div>
-                        </div>
-                        <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
-                            <div style={{transform: "rotate(180deg)"}}><RightArrow /></div>
-                            <SPAN>0.3</SPAN>
-                            <div><RightArrow /></div>
-                        </div>
-                    </RightBottomRight>
-                </RightBottomRegion>
+                {dummyData.map((sentence:any,index:any) => {
+                    console.log(sentence);
+                    return(
+                        <div key={index}>
+                        <RightWrapper>
+                            <TextArea readOnly defaultValue={sentence.eng} />
+                            <TimeRegion>
+                                <Input readOnly value={sentence.start} />
+                                <Input readOnly value={sentence.end} />
+                            </TimeRegion>
+                            <TimeRegion>
+                                <Input type="number" value={leftInputValue[index]} onChange={(e) => leftInputValueChange(e,index)} />
+                                <Input type="number" value={RightInputValue[index]} onChange={(e) => RightInputValueChange(e,index)} />
+                            </TimeRegion>
+                            <TimeRegion>
+                                <Button1 heightSize="40px" text="추가" onClick={() => onClickLeftAddButton(sentence.start,index)} size="60px" />
+                                <Button1 heightSize="40px" text="추가" onClick={() => onClickRightAddButton(sentence.end,index)} size="60px" />
+                            </TimeRegion>
+                        </RightWrapper>
+                        <RightBottomRegion>
+                        <RightBottomLeft>
+                            <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
+                                <div onClick={(e) => onChangeLeftDownOneSecondsTime(e,index)} style={{transform: "rotate(180deg)"}}><RightArrow /></div>
+                                <SPAN>1.0</SPAN>
+                                <div onClick={(e) => onChangeLeftUpOneSecondsTime(e,index)}><RightArrow /></div>
+                            </div>
+                            <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
+                                <div style={{transform: "rotate(180deg)"}}><RightArrow /></div>
+                                <SPAN>0.3</SPAN>
+                                <div><RightArrow /></div>
+                            </div>
+                        </RightBottomLeft>
+                        <RightBottomMiddle>
+                            <RightDiv>
+                                <PlayIcon onClick={() => onStartPlayVideo(index)} size="30px" />
+                                <Button1 margin="40px" text="잇고 끊기" size="100px" heightSize="40px" onClick={(e) => onClickButton(index)} />
+                                <StopIcon onClick={onStopPlayVideo} size="30px" />
+                            </RightDiv>
+                        </RightBottomMiddle>
+                        <RightBottomRight>
+                            <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
+                                <div onClick={(e) => onChangeRightDownOneSecondsTime(e,index)} style={{transform: "rotate(180deg)"}}><RightArrow /></div>
+                                <SPAN>1.0</SPAN>
+                                <div onClick={(e) => onChangeRightUpOneSecondsTime(e,index)}><RightArrow /></div>
+                            </div>
+                            <div style={{display:'flex', justifyContent: 'center', alignItems:'center', flexDirection:'row'}}>
+                                <div style={{transform: "rotate(180deg)"}}><RightArrow /></div>
+                                <SPAN>0.3</SPAN>
+                                <div><RightArrow /></div>
+                            </div>
+                        </RightBottomRight>
+                    </RightBottomRegion>
+                    </div>
+                    );
+                })}
+                
+                <NextButtonWrap>
+                    <Button1 text="저장하고 다음으로" size="120px" heightSize="40px" onClick={GoMakeSentence}/>
+                </NextButtonWrap>
             </RightHalf>
         </Container>
     );

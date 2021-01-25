@@ -4,6 +4,13 @@ import PublicButton from '../../utils/Button/PublicButton';
 import axios from 'axios';
 import ToggleButton from '../../utils/ToggleMenuBar/ToggleButton';
 import Loading from '../../utils/Loading';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import PaginationModule from '../../utils/Pagination/PaginationModule';
+import SmallWord from '../../utils/SmallWord/SmallWord';
+
+
+
 
 const PTex = styled.div`
     font-size: 1rem;
@@ -23,7 +30,7 @@ const InnerDIV = styled.div`
 `;
 const Inner2DIV = styled.div`
     display: flex;
-    height: 150px;
+    height: 175pt;
 `;
 const Inner3DIV = styled.div`
     font-size: 1rem;
@@ -82,37 +89,6 @@ const InnerTitle = styled.p`
     text-align: left;
 `;
 
-const Button = styled.button`
-    width: 32pt;
-    height: 18pt;
-    border-radius: 3px;
-    background-color: rgb(255, 227, 25);
-    margin-right: 8px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border: none;
-    cursor: pointer;
-`;
-
-const SmallTitle = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(255, 227, 25);
-    border-radius: 5pt;
-    border: 0px;
-    cursor: pointer;
-    height: 16pt;
-    width: 16pt;
-    outline-style: none;
-`;
-
-const Label = styled.label`
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 8pt;
-`;
-
 
 const RegisterP = styled.p`
     margin-top: 2px;
@@ -146,75 +122,44 @@ const UpdateDIV = styled.div`
     margin-top: 10px;
 `;
 
-const Img = styled.img``;
-
-const PaginationDiv = styled.div`
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding: 30pt 0pt 100pt;
-`;
-
-const Nav = styled.nav`
-    color: rgb(44, 44, 44);
-    display:flex;
-`;
-
-const UL = styled.ul`
-    margin: 0;
-    display: flex;
-    padding: 0;
-    flex-wrap: wrap;
-    list-style: none;
-    align-items: center;
-`;
-
-const LI = styled.li`
-    margin: 0;
-    display: flex;
-    padding: 0;
-    flex-wrap: wrap;
-    list-style: none;
-    align-items: center;
-`;
-const BUtton1 = styled.button`
-    color: rgba(0, 0, 0, 0.87);
-    height: 32px;
-    margin: 0 3px;
-    padding: 0 6px;
-    font-size: 0.875rem;
-    min-width: 32px;
-    box-sizing: border-box;
-    text-align: center;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: 400;
-    line-height: 1.43;
-    border-radius: 16px;
-    letter-spacing: 0.01071em;
-`;
-
-
-
 
 type Props = {
     CookieValue: number;
     category: Number;
+    setHeaderClickIsLoading:any;
+    HeaderClickIsLoading:any;
 }
 
 type PropsBody = {
     contents: number;
-    isHidden:boolean
+    isHidden:boolean;
 }
 
-const AdminContentManageMain = ({category,CookieValue}:Props) => {
+const AdminContentManageMain = ({HeaderClickIsLoading,setHeaderClickIsLoading,category,CookieValue}:Props) => {
     
     const [page, setPage] = useState<number>(1);
-    const [Data, setData] = useState<[]>([]);
+    const [Data, setData] = useState<Object[]>([]); //[] => [{},{}] //
     const [Total, setTotal] = useState<number>(1);
 
 
-    const Pagination = Math.ceil(Total/10);    
-    const arr = Array.from({length:Pagination},(v,i) => i);
+    console.log(HeaderClickIsLoading,"HeaderClickIsLoading")
+
+    const newArray = Data.map((data:any) => {
+        return data.hidden
+    })
+
+   const [ hiddenData, setHiddenData] = useState<boolean[]>([]);
+   const [ DummyState, setDummyState] = useState<boolean>(false);
+
+
+
+   console.log(hiddenData);
+
+    useEffect(() => {
+        setHiddenData(newArray);
+    },[Data])
+   
+   
 
     const PageClick = (pageNum:number) => {
         setPage(pageNum);
@@ -230,16 +175,18 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
             if(response.data.status === 200) {
                 setData(response.data.data.rows);
                 setTotal(response.data.data.total);
+                setHeaderClickIsLoading(false);
             } else {
                 console.log("데이터를 불러오는데 실패했습니다.")
             }
         });
     }
 
-    //공개버튼 눌렀을 ㄱ여우
-    const PublicButtonChange = (data:any) => {
+    //공개버튼 눌렀을 경우 //반응이 너무나도 느려 // view단에서 바꿔준다
+    const PublicButtonChange = (data:any, index:number) => {
         console.log(data);
-        const hidden = data.hidden;
+       
+        let hidden = data.hidden;
         let body:PropsBody = {
             contents: data.pk,
             isHidden: !hidden
@@ -250,7 +197,10 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
             }
         }).then(response => {
             if(response.data.status === 200) {
-                getData(page,CookieValue,category);
+                // getData(page,CookieValue,category);
+                hiddenData[index] = !hiddenData[index];
+                setDummyState(!DummyState);
+                toast.success("데이터 수정성공");
             } else {
                 alert("메인화면 노출 업데이트 하는데 실패했습니다");
             }
@@ -270,6 +220,7 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
             if(response.data.status === 200) {
                 getData(page,CookieValue,category);
             } else {
+                toast.error("데이터를 삭제하는데 실패했습니다");
                 alert("데이터를 삭제하는데 실패했습니다");
             }
         });
@@ -282,11 +233,12 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
 
     return(
         <>
-        {Data.length !== 0 ? <div>
+        {Data.length !== 0 && !HeaderClickIsLoading ? <div>
             <div style={{padding:'24px'}}>
                 <PTex>
                     {Data.map((data:any,index:number) => {
                         const suburl = data.url.slice(32,43);
+                        
                         return(
                             <InnerDIV key={index}>
                         <Inner2DIV>
@@ -299,42 +251,15 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
                                         <InnerTopText>{data.category}</InnerTopText>
                                         <InnerTopBold>{data.title}</InnerTopBold>
                                         <InnerTitle>{data.youtubeTitle.slice(0,32)}...</InnerTitle>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    단어
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    문장
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    더빙
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    문제
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
+                                        <SmallWord Problems={data.problems} />
                                         <RegisterP>
                                             {data.registered}
                                         </RegisterP>
                                     </Inner6DIV>
                                     <CheckDIV>
                                         <CheckInner>
-                                            <PublicButton state={data.hidden} PublicButtonChange={() => PublicButtonChange(data)} />
-                                            <PublicText>{data.hidden ? "비공개" : "공개"}</PublicText>
+                                            <PublicButton state={hiddenData[index]} PublicButtonChange={() => PublicButtonChange(data,index)} />
+                                            <PublicText>{hiddenData[index] ? "비공개" : "공개"}</PublicText>
                                         </CheckInner>
                                     </CheckDIV>
                                     <UpdateDIV>
@@ -348,22 +273,20 @@ const AdminContentManageMain = ({category,CookieValue}:Props) => {
                     })}
                 </PTex>
             </div>
-                <PaginationDiv>
-                    <Nav>
-                    {arr.map((arr,index) => {
-                        const pageNum = arr+1;
-                        return(
-                            <UL key={index}>
-                                <LI>
-                                    <BUtton1 onClick={() => PageClick(pageNum)}>
-                                        {arr+1}
-                                    </BUtton1>
-                                </LI>
-                            </UL>
-                        )
-                    })}
-                    </Nav>
-                </PaginationDiv>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={10000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                <div style={{display:'flex', justifyContent:'center'}}>
+                    <PaginationModule currentPage={page} TotalPage={Total} PageClick={PageClick} />
+                </div>    
         </div>
                 :  <Loading />}
         

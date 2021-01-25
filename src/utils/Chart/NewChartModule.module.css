@@ -1,0 +1,23 @@
+.donut {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Rate p {
+    margin:0;
+    width: 220px;
+    margin-bottom: 10pt;
+}
+
+.Rate :nth-child(1) {
+    color:#4c4545bf;
+}
+.Rate :nth-child(2) {
+    font-size: 24pt;
+    color:#8484cd;
+}
+.Rate :nth-child(3) {
+    font-size: 14pt;
+    color:#cb5f5f;
+}

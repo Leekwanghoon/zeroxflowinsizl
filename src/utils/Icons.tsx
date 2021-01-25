@@ -34,13 +34,15 @@ export const RightArrow = ({
 );
 
 type PlayIconProps = {
-    size:string
+    size: string, onClick?: any, opacity?: any
 }
 
 export const PlayIcon = ({
-    size = "24"
-}:PlayIconProps) => (
+    size = "24",
+    onClick
+} : PlayIconProps) => (
     <svg
+        onClick={onClick}
         xmlns="http://www.w3.org/2000/svg"
         width={size}
         height={size}
@@ -49,11 +51,40 @@ export const PlayIcon = ({
 )
 
 export const StopIcon = ({
-    size = "24"
-}) => (
+    size = "24",
+    onClick
+} : PlayIconProps) => (
     <svg
+        onClick={onClick}
         xmlns="http://www.w3.org/2000/svg"
         width={size}
         height={size}
         viewBox="0 0 24 24"><path d="M2 2h20v20h-20z"/></svg>
 )
+
+export const Upload = ({
+    size = "24",
+    onClick
+} : PlayIconProps) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"><path d="M8 10h-5l9-10 9 10h-5v10h-8v-10zm11 9v3h-14v-3h-2v5h18v-5h-2z"/></svg>
+)
+
+export const XMark = ({
+    size = "24",
+    onClick,
+    opacity
+} : PlayIconProps) => (
+    <svg
+        onClick={onClick}
+        opacity={opacity}
+        xmlns="http://www.w3.org/2000/svg"
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"><path
+        d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg>
+)
+

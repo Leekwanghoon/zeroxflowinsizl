@@ -33,7 +33,7 @@ const Gong = styled.div`
     box-sizing: border-box;     
     border: none;
     border-radius: 100%;
-    transition: 1s;
+    transition: .3s;
 `;
 
 type PublicButtonProps = {

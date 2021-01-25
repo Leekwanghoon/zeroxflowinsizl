@@ -49,7 +49,9 @@ const MainBody = styled.div`
 
 const AdminCourseMoreViewPage:React.FC = (props:any) => {
 
+    console.log(props,"props");
     const query = queryString.parse(props.location.search);
+    console.log(query,"query");
 
     const dispatch = useDispatch();
     const Data = useSelector((state:RootState) => state?.user?.data?.data?.contents);

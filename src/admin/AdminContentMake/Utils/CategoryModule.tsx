@@ -47,6 +47,18 @@ const DIV = styled.div`
         background-color: yellow;
     }
 `;
+
+const DIVG = styled.div`
+    display:flex;
+    height:20%;
+    align-items: center;
+    background-color: yellow;
+    &:hover {
+        background-color: gray;
+    }
+`;
+
+
 const SPAN = styled.span`
     margin-left:12px;
 `;
@@ -54,9 +66,10 @@ const SPAN = styled.span`
 type Props = {
     CookieValue:Number;
     onClickCheckButton:any;
+    EmptyArray:any;
 }
 
-const CategoryModule = ({onClickCheckButton,CookieValue}:Props) => {
+const CategoryModule = ({onClickCheckButton,CookieValue,EmptyArray}:Props) => {
     
    
     const [OptionData, setOptionData] = useState<[]>([]);
@@ -83,7 +96,7 @@ const CategoryModule = ({onClickCheckButton,CookieValue}:Props) => {
         setIsClick(!IsClick);
     }
 
-   
+  
    
 
     return(
@@ -95,13 +108,13 @@ const CategoryModule = ({onClickCheckButton,CookieValue}:Props) => {
             </CategoryWrap>
             {IsClick ? 
                 <BottomWrap>
-                    {OptionData && OptionData.map((item:any,index:any) => {
+                    {OptionData && OptionData.map((item:any,index:number) => {
                         return(
                             <DIV onClick={() => onClickCheckButton(item.category,index)} key={item.category}>
                                 <Check />
                                 <SPAN>{item.name}</SPAN>
                             </DIV>
-                        );
+                        ) 
                     })}
                 </BottomWrap> 
             : null}

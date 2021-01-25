@@ -10,6 +10,7 @@ import Input1 from '../utils/Input/Input';
 import Button1 from '../utils/Button1';
 import Helmet from 'react-helmet';
 import AdminCategoryModule from './AdminCategoryModule';
+import AdminMainImage from '../utils/Caraousel/AdminMainImage';
 
 const Container = styled.div`
 `;
@@ -33,16 +34,6 @@ const MainSection = styled.div`
     margin-right: 10%;
 `;
 
-const MainTitle = styled.div`
-    height: 50px;
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const MainBody = styled.div`
-    display:flex;
-`;
 
 
 const AdminMainPage: React.FC = (props:any) => {
@@ -127,81 +118,11 @@ const AdminMainPage: React.FC = (props:any) => {
                     <Button1 onClick={onSearchButton} size="10%" text="검색" />
                 </SearchSection>
                     <MainSection>
-                        <MainTitle>
-                            <p>{list1.name}</p>
-                            <p>더보기</p>
-                        </MainTitle>
-                        <MainBody>
-                            <div style={{
-                                height:"300px",
-                                display:"flex",
-                                flexDirection:"row",
-                            }}>
-                                {listA && listA.map((content:any,index:any) => {
-                                    
-                                    // const str = "https://www.youtube.com/watch?v="; //11개의 아이디,32개의글자
-                                    const suburl = content.url.slice(32,43);
-
-                                    return(
-                                        <div 
-                                            key={index}
-                                        >
-                                            <img width="100%" src={`https://img.youtube.com/vi/${suburl}/0.jpg`} alt="Logo" height="150px" 
-                                                style={{
-                                                    margin:"10px",
-                                                    padding:"10px"
-                                                }}/>
-                                            <p>{content?.title}</p>
-                                            <p>{content?.youtubeTitle?.slice(0,31)}...</p>
-                                            <div>
-                                                <label>단어</label>
-                                                <label>문장</label>
-                                                <label>더빙</label>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </MainBody>
+                        <AdminMainImage list1={list1} listA={listA} />
                     </MainSection>
                     {/* 하단 */}
                     <MainSection>
-                        <MainTitle>
-                            <p>{list2.name}</p>
-                            <p>더보기</p>
-                        </MainTitle>
-                        <MainBody>
-                            <div style={{
-                                height:"300px",
-                                display:"flex",
-                                flexDirection:"row",
-                            }}>
-                                {listB && listB.map((content:any,index:any) => {
-                                    // console.log(content,"listB");
-                                    // const str = "https://www.youtube.com/watch?v="; //11개의 아이디,32개의글자
-                                    const suburl = content.url.slice(32,43);
-
-                                    return (
-                                        <div 
-                                            key={index}
-                                        >
-                                            <img width="100%" src={`https://img.youtube.com/vi/${suburl}/0.jpg`} alt="Logo" height="150px" 
-                                                style={{
-                                                    margin:"10px",
-                                                    padding:"10px"
-                                                }}/>
-                                            <p>{content?.title}</p>
-                                            <p>{content?.youtubeTitle?.slice(0,31)}</p>
-                                            <div>
-                                                <label>단어</label>
-                                                <label>문장</label>
-                                                <label>더빙</label>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </MainBody>
+                        <AdminMainImage list1={list2} listA={listB} />
                     </MainSection>
             </Container>
         </>

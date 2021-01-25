@@ -77,6 +77,8 @@ const AdminPlayListMainManage:React.FC<Props> = ({PlayListItems,IsClickContent,C
     }
 
     //목록 메인화면 노출 클릭
+
+    //받아왔고 , == 
     const PublicButtonChange = (playlist:any) => {
         let hidden = playlist.hidden;
         let body = {

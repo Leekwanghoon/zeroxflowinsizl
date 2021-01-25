@@ -3,6 +3,7 @@ export interface FrequnetlyButton {
     heightSize?: string | number
     color?: string
     margin?: any
+    borderRadius?:any
 }
 
 export interface FrequentlyInput {
@@ -24,3 +25,4 @@ export interface RegisterUserInfo {
         classroom?:number,
         tag?:number
 }
+

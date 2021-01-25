@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import PaginationModule from '../../../utils/Pagination/PaginationModule';
+import SmallWord from '../../../utils/SmallWord/SmallWord';
+
 
 const PTex = styled.div`
     font-size: 1rem;
@@ -79,37 +82,6 @@ const InnerTitle = styled.p`
     text-align: left;
 `;
 
-const Button = styled.button`
-    width: 32pt;
-    height: 18pt;
-    border-radius: 3px;
-    background-color: rgb(255, 227, 25);
-    margin-right: 8px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border: none;
-    cursor: pointer;
-`;
-
-const SmallTitle = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(255, 227, 25);
-    border-radius: 5pt;
-    border: 0px;
-    cursor: pointer;
-    height: 16pt;
-    width: 16pt;
-    outline-style: none;
-`;
-
-const Label = styled.label`
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 8pt;
-`;
-
 
 const RegisterP = styled.p`
     margin-top: 2px;
@@ -120,50 +92,7 @@ const RegisterP = styled.p`
     text-align: left;
 `;
 
-const PaginationDiv = styled.div`
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding: 30pt 0pt 100pt;
-`;
 
-const Nav = styled.nav`
-    color: rgb(44, 44, 44);
-    display:flex;
-`;
-
-const UL = styled.ul`
-    margin: 0;
-    display: flex;
-    padding: 0;
-    flex-wrap: wrap;
-    list-style: none;
-    align-items: center;
-`;
-
-const LI = styled.li`
-    margin: 0;
-    display: flex;
-    padding: 0;
-    flex-wrap: wrap;
-    list-style: none;
-    align-items: center;
-`;
-const BUtton1 = styled.button`
-    color: rgba(0, 0, 0, 0.87);
-    height: 32px;
-    margin: 0 3px;
-    padding: 0 6px;
-    font-size: 0.875rem;
-    min-width: 32px;
-    box-sizing: border-box;
-    text-align: center;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: 400;
-    line-height: 1.43;
-    border-radius: 16px;
-    letter-spacing: 0.01071em;
-`;
 
 const TeacherDiv = styled.div`
         display: flex;
@@ -193,12 +122,15 @@ const AdminHomeworkDeadline = ({closed, CookieValue}:Props) => {
 
     console.log(DeadlineData,"dadadas확인중");
 
-    const Pagination = Math.ceil(Total/10);    
-    const arr = Array.from({length:Pagination},(v,i) => i);
 
     const PageClick = (pageNum:number) => {
         setPage(pageNum);
     }
+
+
+    
+
+
 
 
     async function getData(page:number, CookieValue:number, closed:boolean) {
@@ -242,34 +174,7 @@ const AdminHomeworkDeadline = ({closed, CookieValue}:Props) => {
                                         <InnerTopText>{data.category}</InnerTopText>
                                         <InnerTopBold>{data.title}</InnerTopBold>
                                         <InnerTitle>{data.youtubeTitle.slice(0,32)}...</InnerTitle>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    단어
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    문장
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    더빙
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
-                                        <Button>
-                                            <SmallTitle>
-                                                <Label>
-                                                    문제
-                                                </Label>
-                                            </SmallTitle>
-                                        </Button>
+                                        <SmallWord Problems={data.problems} />
                                         <RegisterP>
                                             {data.registered}
                                         </RegisterP>
@@ -285,22 +190,9 @@ const AdminHomeworkDeadline = ({closed, CookieValue}:Props) => {
                     })}
                 </PTex>
             </div>
-                <PaginationDiv>
-                    <Nav>
-                    {arr.map((arr,index) => {
-                        const pageNum = arr+1;
-                        return(
-                            <UL key={index}>
-                                <LI>
-                                    <BUtton1 onClick={() => PageClick(pageNum)}>
-                                        {arr+1}
-                                    </BUtton1>
-                                </LI>
-                            </UL>
-                        )
-                    })}
-                    </Nav>
-                </PaginationDiv>
+                <div style={{display:'flex',justifyContent:'center'}}>
+                    <PaginationModule TotalPage={Total} PageClick={PageClick} currentPage={page} />
+                </div>
         </div>
                 
     );

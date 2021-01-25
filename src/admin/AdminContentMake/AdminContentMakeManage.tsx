@@ -34,7 +34,7 @@ const Content = styled.div`
 const AdminContentMakeManage:React.FC = (props:any) => {
 
     const CookieValue = props.cookieValue[1];
-    const [state, setState] = useState<Number>(3);
+    const [state, setState] = useState<Number>(5);
 
     console.log(state);
 

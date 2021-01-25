@@ -36,6 +36,8 @@ const AdminContentManage:React.FC = (props:any) => {
     const CookieValue = props.cookieValue[1];
     const [state, setState] = useState<Number>(-1);
 
+    const [HeaderClickIsLoading, setHeaderClickIsLoading] = useState<boolean>(false);
+
     console.log(state);
 
     axios.get(`https://1hour.school/api/v1/category/list`, {
@@ -50,19 +52,24 @@ const AdminContentManage:React.FC = (props:any) => {
     const onMovieInOST = () => {
         console.log("클릭해따");
         setState(1);
+        setHeaderClickIsLoading(true);
     }
     const onListenPopsong = () => {
         setState(2);
+        setHeaderClickIsLoading(true);
     }
 
     const onTedCourse = () => {
         setState(3);
+        setHeaderClickIsLoading(true);
     }
     const onStreet = () => {
         setState(4);
+        setHeaderClickIsLoading(true);
     }
     const onSingAlong = () => {
         setState(5);
+        setHeaderClickIsLoading(true);
     }
 
 
@@ -86,7 +93,7 @@ const AdminContentManage:React.FC = (props:any) => {
                         onStreet={onStreet}
                         onSingAlong={onSingAlong}
                     />
-                    <AdminContentManageMain category={state} CookieValue={CookieValue} />
+                    <AdminContentManageMain HeaderClickIsLoading={HeaderClickIsLoading} setHeaderClickIsLoading={setHeaderClickIsLoading} category={state} CookieValue={CookieValue} />
                 </Content>
             </Wrapper>    
         </Container>

@@ -33,6 +33,20 @@ const Tbody = styled.tbody`
     color: rgb(44, 44, 44);
     font: 13px / 15px "Helvetica Neue";
 `;
+type TDType = {
+    IsEven?: boolean;
+    index: number;
+}
+
+const TD = styled.td`
+    ${(props:TDType) => props.index%2 !== 0 ? 
+        `background: #F2F2F2;` 
+        :
+        `background: #FFFFFF;`
+    }
+    border:0.5pt solid #F2F2F2;
+    height: 30px;
+`;
 
 type Props = {
     tab: Number;
@@ -44,6 +58,7 @@ const AdminMemberMainManage:React.FC<Props> = ({tab,CookieValue}) => {
 
     console.log(tab,"이거");
     console.log(CookieValue);
+    const [IsEven, setIsEven] = useState<boolean>(false);
 
     const [page, setPage] = useState<Number>(1);
     const [memberData, setMemberData] = useState([]);
@@ -133,12 +148,12 @@ const AdminMemberMainManage:React.FC<Props> = ({tab,CookieValue}) => {
                                     <tr key={index}>
                                         <td><input type="checkbox" /></td>
                                         <td>#</td>
-                                        <td>{member.name}</td>
-                                        <td>{member.authority}</td>
-                                        <td>{member.pk}</td>
-                                        <td>{member.organization_name}</td>
-                                        <td>{member.id}</td>
-                                        <td>{member.registered}</td>
+                                        <TD index={index} IsEven={IsEven}>{member.name}</TD>
+                                        <TD index={index} IsEven={IsEven}>{member.authority}</TD>
+                                        <TD index={index} IsEven={IsEven}>{member.pk}</TD>
+                                        <TD index={index} IsEven={IsEven}>{member.organization_name}</TD>
+                                        <TD index={index} IsEven={IsEven}>{member.id}</TD>
+                                        <TD index={index} IsEven={IsEven}>{member.registered}</TD>
                                         <td style={{cursor:'pointer'}}><img src={pencil} alt="logo" width="11px" height="11px" /></td>
                                     </tr>
                             );

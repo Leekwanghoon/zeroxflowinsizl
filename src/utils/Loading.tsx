@@ -15,19 +15,25 @@ const Animation = keyframes`
 
 
 const Container = styled.div`
-    height:1000vh;
-    width:1000px;
+    height:2301.33px;
+    width:1903px;
+    position:absolute;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,0.3);
 `;
 
 const Loader = styled.div`
     animation: ${Animation} 1s linear infinite;
     display:flex;
     justify-content:center;
-    align-items:center;
+    position:fixed;
+    top: 600px;
     z-index:1;
     font-size:30px;
     color: black;
-    height:100vh;
+    width:1903px;
+    height:2301.33px;
 `;
 
 type Props = {

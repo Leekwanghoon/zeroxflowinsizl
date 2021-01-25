@@ -26,9 +26,10 @@ type Props = {
     minHeightSize?:string
     value?:string
     onChange?:any
+    placeholder?:any
 }
 
-const TextAreaModule = ({value,onChange,widthSize,minHeightSize="62px"}:Props) => {
+const TextAreaModule = ({placeholder,value,onChange,widthSize,minHeightSize="62px"}:Props) => {
     
     
     return(
@@ -38,6 +39,7 @@ const TextAreaModule = ({value,onChange,widthSize,minHeightSize="62px"}:Props) =
                 onChange={onChange} 
                 widthSize={widthSize} 
                 minHeightSize={minHeightSize}
+                placeholder={placeholder}
             />
         </>
     );

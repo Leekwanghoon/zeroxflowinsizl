@@ -1,0 +1,114 @@
+.Wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.Wrapper .BackButton{
+    margin-top: 30pt;
+    margin-left: 100pt;
+}
+.Wrapper .BackButton span {
+    font-size: 20px;
+    margin-left: 13pt;
+}
+.Wrapper .BackButton span:hover {
+    font-size: 22px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+.Wrapper .MainWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+    margin-top:10pt;
+}
+.Wrapper .MainWrapper .Main {
+    display: flex;
+    width: 80%;
+}
+.Wrapper .MainWrapper .Main .PrintRegion {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+.Wrapper .MainWrapper .Title {
+    margin-top: 30pt;
+    font-size: 30pt;
+    width: 1080px;
+}
+.Wrapper .MainWrapper .Summary {
+    margin-top: 100pt;
+    font-size: 14px;
+}
+.Wrapper .MainWrapper .Summary {
+    font-size: 14px;
+}
+.Wrapper .MainWrapper .Title .Summary .IMGADD {
+    position: relative;
+    display:flex;
+}
+.Wrapper .MainWrapper .Summary img {
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.Wrapper .MainWrapper .Summary span {
+    font-size: 27px;
+    font-weight: 600;
+    position: absolute;
+    top: 30px;
+    left: 25px;
+}
+.Wrapper .MainWrapper .Summary .RedSpan {
+    font-size: 27px;
+    color:red;
+    font-weight: 600;
+    position: absolute;
+    top: 30px;
+    left: 25px;
+}
+.Wrapper .MainWrapper .Summary .FontSpan {
+    font-size: 18pt;
+    font-weight: 500;
+    position: absolute;
+    top: 30px;
+    left: 210px;
+}
+.Wrapper .MainWrapper .Title .Graph {
+    margin-top:100pt;
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+}
+.Wrapper .MainWrapper .Title .Graph .GraphSon {
+    display:flex;
+    width:50%;
+}
+.Wrapper .MainWrapper .Title .Graph .GraphSon1 {
+    display:flex;
+    width:50%;
+    margin-left: 220px;
+}
+.Wrapper .MainWrapper .Title .Graph .GraphSon2 {
+    display:flex;
+    align-items: center;    
+    width:50%;
+}
+.Wrapper .MainWrapper .Title .Graph .GraphSon2 p {
+    font-size: 22pt;
+    font-weight: 300;
+}
+.Wrapper .MainWrapper .Title .SeveralGraph {
+    margin-top:70pt;
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+}
+.Wrapper .MainWrapper .Title .SeveralGraph .OneOfThirdGraph {
+    display:flex;
+    justify-content: space-between;
+    width:33%;
+    font-size: 14pt;
+}

@@ -10,7 +10,6 @@ import Input1 from '../../utils/Input/Input';
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../_reducers';
-import { login } from '../../_actions/user_action';
 import Helmet from 'react-helmet';
 const Linked = styled(Link)`
     text-decoration:none;
@@ -58,8 +57,6 @@ const Login = (props:any) => {
             console.error(error);
         }
     }
-    
-
 
     const onLogin = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -67,21 +64,9 @@ const Login = (props:any) => {
             email: email.value,
             password: password.value
         }
-        // dispatch(login(body, email.value));
-        // console.log(data,"finddata");   
-
         getLogin(body)
-
-        // if( data?.login?.data?.authority === undefined ) {
-        //     dispatch(login(body, email.value));
-        //     console.log(data && data.login && data.login.data,"undefined면 다시보내"); 
-        // } 
-
     }
 
-   
-
-   
 
     return(
         <Container>
@@ -103,7 +88,9 @@ const Login = (props:any) => {
                         type="password"
                         {...password}
                     />
-                    <Button1 onClick={onLogin} text="로그인" size="50px" />
+                    <div style={{display:'flex',justifyContent:'center', marginTop:'10pt'}}>
+                        <Button1 onClick={onLogin} text="로그인" size="50px" />
+                    </div>
                     <Small>
                         <Linked to="/findPassword"><p>비밀번호 찾기</p></Linked>
                         <Linked to="/register"><p>회원가입</p></Linked>

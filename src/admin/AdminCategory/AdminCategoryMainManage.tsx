@@ -36,6 +36,21 @@ const Tbody = styled.tbody`
     font: 13px / 15px "Helvetica Neue";
 `;
 
+type TDType = {
+    IsEven?: boolean;
+    index: number;
+}
+
+const TD = styled.td`
+    ${(props:TDType) => props.index%2 !== 0 ? 
+        `background: #F2F2F2;` 
+        :
+        `background: #FFFFFF;`
+    }
+    border:0.5pt solid #F2F2F2;
+    height: 30px;
+`;
+
 type Props = {
     CookieValue: Number;
 }
@@ -118,9 +133,9 @@ const AdminCategoryMainManage:React.FC<Props> = ({CookieValue}) => {
                                 return(
                                     <tr key={index}>
                                         <td>#</td>
-                                        <td>{category.name}</td>
-                                        <td>{category.size}</td>
-                                        <td>{category.registered}</td>
+                                        <TD index={index}>{category.name}</TD>
+                                        <TD index={index}>{category.size}</TD>
+                                        <TD index={index}>{category.registered}</TD>
                                         <td onClick={() => CategoryUpdateModalHandler(category)} style={{cursor:'pointer'}}><img src={pencil} alt="logo" width="11px" height="11px" /></td>
                                     </tr>
                                 );
